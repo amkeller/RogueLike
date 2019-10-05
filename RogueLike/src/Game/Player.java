@@ -18,9 +18,9 @@ public class Player extends GameObject {
 	}
 
 	public void logic() {
-		if (Main.l.list.isEmpty() != true) {
+		if (Main.keyPresses.isEmpty() != true) {
 
-			int keyCode = Main.l.list.remove(0);
+			int keyCode = Main.keyPresses.remove(0);
 
 			if (keyCode == KeyEvent.VK_W) {
 				//				

@@ -10,11 +10,16 @@ public abstract class GameObject {
 	
 	public GameObject(String namein) {
 		this.name = namein;
+		// master list of game objects in game
+		Engine.Main.gameObjs.add(this); 
 	}
 	
 	public String getName() { return this.name; }
+	public void setName(String name) { this.name = name; }
 	public int getX() { return this.posX; }
 	public int getY() { return this.posY; }
+	public void setX(int x) { this.posX = x; }
+	public void setY(int y) { this.posY = y; }
  	
 	public void addComponent(Component component) {
 		if (!coms.contains(component)) {
@@ -28,7 +33,6 @@ public abstract class GameObject {
 				coms.remove(co);
 			}
 		}
-		
 		return true;
 	}
 	
@@ -37,9 +41,7 @@ public abstract class GameObject {
 			if (c == co.getClass()) {
 				return co;
 			}
-			
 		}
-		
 		return null;
 	}
 }

@@ -1,7 +1,9 @@
 package Engine;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
+import Game.Collisions;
 import Game.Player;
 
 
@@ -14,22 +16,22 @@ public class Main {
 	//      Devin Popa
 	
 	public static Grid grid;
-	public static InputHandler l;
+	public static InputHandler inputHandler;
 
 	public static final int GRIDSCALE = 20;
+	
+	// event lists
+	public static final ArrayList<GameObject> gameObjs = new ArrayList<GameObject>();
+	public static final ArrayList<Collisions> collisions = new ArrayList<Collisions>();
+	public static final ArrayList<Integer> keyPresses = new ArrayList<Integer>();
 
 	public static void main(String[] args) throws InterruptedException {
 
-		grid = new Grid(GRIDSCALE);
+		grid = new Grid(GRIDSCALE);						
 		
-		// need to make a Player class
-				
-		//player.addComponent(new PlayerComponent(player));
+		Player player = new Player("player");
 		
-		
-//		Player player = new Player(player);
-		
-		l = new InputHandler(grid);
+		inputHandler = new InputHandler(grid);
 		grid.setFocusable(true);
 
 		
@@ -40,9 +42,9 @@ public class Main {
 //			grid.add(p);
 	
 			
-			if (!l.list.isEmpty()) {
+			if (!keyPresses.isEmpty()) {
 				
-				int keyCode = l.list.remove(0);
+				int keyCode = keyPresses.remove(0);
 				
 				if (keyCode == KeyEvent.VK_W) {
 //					if (grid.inBounds(cursor[0] - 1, cursor[1]) == true) {

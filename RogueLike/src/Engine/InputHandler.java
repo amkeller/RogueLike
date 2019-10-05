@@ -10,9 +10,6 @@ public class InputHandler implements KeyListener {
 	public InputHandler(Grid g) {
 		g.addKeyListener(this);
 	}
-	
-	public ArrayList<Integer> list = new ArrayList<Integer>();
-
 
 		@Override
 		public void keyTyped(KeyEvent e) {
@@ -22,15 +19,15 @@ public class InputHandler implements KeyListener {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int keyCode = e.getKeyCode();
-			if (!list.contains(keyCode) ) {
-				list.add(keyCode);
+			if (!Main.keyPresses.contains(keyCode) ) {
+				Main.keyPresses.add(keyCode);
 			}
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
 			int keyCode = e.getKeyCode();
-			list.remove(new Integer(keyCode));
+			Main.keyPresses.remove(new Integer(keyCode));
 		}
 	}
 
