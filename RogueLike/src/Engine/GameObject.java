@@ -3,6 +3,8 @@ package Engine;
 import java.util.ArrayList;
 
 public abstract class GameObject {
+	private static int idCount = 0;
+	private int id;
 	private String name = null;
 	private int posX = 0;
 	private int posY = 0; 
@@ -10,6 +12,8 @@ public abstract class GameObject {
 	
 	public GameObject(String namein) {
 		this.name = namein;
+		this.id = idCount;
+		idCount++;
 		// master list of game objects in game
 		Engine.Main.gameObjs.add(this); 
 	}
@@ -20,6 +24,7 @@ public abstract class GameObject {
 	public int getY() { return this.posY; }
 	public void setX(int x) { this.posX = x; }
 	public void setY(int y) { this.posY = y; }
+	public int getId() { return this.id; }
  	
 	public void addComponent(Component component) {
 		if (!coms.contains(component)) {
@@ -43,5 +48,14 @@ public abstract class GameObject {
 			}
 		}
 		return null;
+	}
+	
+	// Unique id is a super easy way to identify GameObjects in lists
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if ((o == null) || !(o instanceof GameObject)) return false;
+		GameObject g = (GameObject) o;
+		if (this.id == g.getId()) return true;
+		return false;
 	}
 }

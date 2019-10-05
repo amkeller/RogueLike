@@ -3,8 +3,10 @@ package Engine;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import Game.Collisions;
+import Game.Collision;
 import Game.Player;
+import Game.Collision.cEvent;
+import Game.Death;
 
 
 public class Main {
@@ -20,10 +22,11 @@ public class Main {
 
 	public static final int GRIDSCALE = 20;
 	
-	// event lists
+	// GameObject & event lists
 	public static final ArrayList<GameObject> gameObjs = new ArrayList<GameObject>();
-	public static final ArrayList<Collisions> collisions = new ArrayList<Collisions>();
+	public static final ArrayList<cEvent> collisions = new ArrayList<cEvent>();
 	public static final ArrayList<Integer> keyPresses = new ArrayList<Integer>();
+	public static final ArrayList<Death> deaths = new ArrayList<Death>();
 
 	public static void main(String[] args) throws InterruptedException {
 
