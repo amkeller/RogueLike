@@ -2,146 +2,56 @@ package Engine;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.awt.Color;
 
 import Game.Player;
+import Game.Adversary;
+import Game.Collision;
 import Game.Collision.cEvent;	// collision event
-
-public class Main {
+import Engine.GridMap;
 
 	//		Project 2
 	//		Matthew Mills
 	//		John Mattingly
 	//		Annette Keller
 	//      Devin Popa
-	
-	public static Grid grid;
-	public static InputHandler inputHandler;
 
-	public static final int GRIDSCALE = 20;
+public class Main {
+	public static GridMap.Grid grid;
+	public static InputHandler inputHandler;
+	public static Collision collisionThrower;
 	
-	// GameObject & event lists
+	// GameObjects & event lists
+	public static final Player thisGuy = new Player("thisGuy");
+	public static final Adversary thatGuy = new Adversary("thatGuy");
 	public static final ArrayList<GameObject> gameObjs = new ArrayList<GameObject>();
 	public static final ArrayList<cEvent> collisions = new ArrayList<cEvent>();
 	public static final ArrayList<Integer> keyPresses = new ArrayList<Integer>();
 	public static final ArrayList<GameObject> dead = new ArrayList<GameObject>();
+	
+	public static final int GRIDSCALE = 20;
+	public static final int SPEED = 10;
+	
+	public static enum games { ANT, SHOOTER };
+	
+	//static GridMap antMap = new GridMap(GRIDSCALE);
+	static GridMap gameMap = new GridMap(GRIDSCALE);
 
 	public static void main(String[] args) throws InterruptedException {
-
-		grid = new Grid(GRIDSCALE);						
+				
+		// randomly generates about 10-20% obstacles
+		gameMap.init("random");
 		
-		Player player = new Player("player");
+		/* ------------------------- shooter game stuff ------------------------------- */
 		
-		inputHandler = new InputHandler(grid);
-		grid.setFocusable(true);
-
-		
-		// main game loop
-		while (true) {
-			grid.requestFocusInWindow();
-			
-//			grid.add(p);
+	}
 	
-			
-			if (!keyPresses.isEmpty()) {
-				
-				int keyCode = keyPresses.remove(0);
-				
-				if (keyCode == KeyEvent.VK_W) {
-//					if (grid.inBounds(cursor[0] - 1, cursor[1]) == true) {
-//						grid.setColor(cursor[0], cursor[1], Color.WHITE);
-//						cursor[0] = cursor[0] - 1;
-//					}
-				}
-				
-				else if (keyCode == KeyEvent.VK_DOWN) {
-//					if (grid.inBounds(cursor[0] + 1, cursor[1]) == true) {
-//						grid.setColor(cursor[0], cursor[1], Color.WHITE);
-//						cursor[0] = cursor[0] + 1;
-//					}
-				}
-				
-				else if (keyCode == KeyEvent.VK_LEFT) {
-//					if (grid.inBounds(cursor[0], cursor[1] - 1) == true) {
-//						grid.setColor(cursor[0], cursor[1], Color.WHITE);
-//						cursor[1] = cursor[1] - 1;
-//					}
-				}
-				
-				else if (keyCode == KeyEvent.VK_RIGHT) {
-//					if (grid.inBounds(cursor[0], cursor[1] + 1) == true) {
-//						grid.setColor(cursor[0], cursor[1], Color.WHITE);
-//						cursor[1] = cursor[1] + 1;	
-//					}
-				}
-				
-				else if (keyCode == KeyEvent.VK_P) {
-//					while (true) {
-//						grid.setColor(cursor[0], cursor[1], Color.RED);
-//		
-//						if (!l.list.isEmpty()) {
-//							
-//							keyCode = l.list.remove(0);
-//							
-//							if (keyCode == KeyEvent.VK_UP) {
-//								if (grid.inBounds(cursor[0] - 1, cursor[1]) == true) {
-//									grid.setColor(cursor[0], cursor[1], Color.WHITE);
-//									cursor[0] = cursor[0] - 1;
-//								}
-//							}
-//							
-//							else if (keyCode == KeyEvent.VK_DOWN) {
-//								if (grid.inBounds(cursor[0] + 1, cursor[1]) == true) {
-//									grid.setColor(cursor[0], cursor[1], Color.WHITE);
-//									cursor[0] = cursor[0] + 1;
-//								}
-//							}
-//							
-//							else if (keyCode == KeyEvent.VK_LEFT) {
-//								if (grid.inBounds(cursor[0], cursor[1] - 1) == true) {
-//									grid.setColor(cursor[0], cursor[1], Color.WHITE);
-//									cursor[1] = cursor[1] - 1;
-//								}
-//							}
-//							
-//							else if (keyCode == KeyEvent.VK_RIGHT) {
-//								if (grid.inBounds(cursor[0], cursor[1] + 1) == true) {
-//									grid.setColor(cursor[0], cursor[1], Color.WHITE);
-//									cursor[1] = cursor[1] + 1;				
-//								}
-//							}
-//							
-//							else if (keyCode == KeyEvent.VK_SPACE) {
-////								System.out.println("yeet");
-//								if (grid.inBounds(cursor[0], cursor[1]) == true) {
-//									
-//									// check to see if cell is alive, then toggle the opposite
-//									if (grid.isAlive[cursor[0]][cursor[1]] == true) {
-//										grid.isAlive[cursor[0]][cursor[1]] = false;
-//									}
-//									
-//									// check to see if cell is dead, then toggle the opposite
-//									if (grid.isAlive[cursor[0]][cursor[1]] == false) {
-//										grid.isAlive[cursor[0]][cursor[1]] = true;
-//									}
-//								}
-//									
-//							}
-							
-//							else if (keyCode == KeyEvent.VK_P) {
-//								break;								
-//							}
-//						}
-//						
-//					}
-				}
-				
-			}
-			
-			Thread.sleep(100);
-
-			grid.nextStep();
-		}
-
-
+	public static void initialize() {
+	}
+	
+	private void run() {
+	}
+	
+	private void update() {
 	}
 }

@@ -3,6 +3,9 @@ package Game;
 import Engine.Component;
 import Engine.GameObject;
 import Game.Adversary;
+import Game.Player;
+import Game.Bullet;
+import Game.Obstacle;
 
 /**
  * Collisions enable the game to act upon collision events by populating a static
@@ -16,12 +19,11 @@ public class Collision extends Component {
 	public class cEvent {
 		private final GameObject parent; 	// collider 1
 		private GameObject other;  			// collider 2
-		private cEvent(GameObject g) {
+		
+		// event to throw
+		public cEvent(GameObject g) {
 			this.parent = g;
 		}
-		public GameObject getParent() { return this.parent; }
-		public GameObject getOther() { return this.other; }
-		public void setOther(GameObject g) { this.other = g; }
 		
 		/*
 		 * This .equals enables an object to test whether its parent is a member of 
@@ -44,25 +46,26 @@ public class Collision extends Component {
 		super(parent);
 	}
 	
-	// only called if a collision event for parent GameObject has been found.
+	// Only called if a collision event for parent GameObject found in list.
 	// removes the parent GameObject from the collision event, and removes the
 	// collision event from the list of collisions to be handled if the other
-	// GameObject in the collision has already been handled
+	// GameObject in the collision has already been handled & removed
 	public void handleGameObjectCollision() {
 		if (Engine.Main.collisions.contains(new cEvent(this.parent))) {
 			int i = Engine.Main.collisions.indexOf(this);
 			cEvent c = Engine.Main.collisions.get(i);
-			// don't remove collision from list unless the other object in the
-			// collision has already been handled & removed
+			// leave collision event in list if the other object in the
+			// collision hasn't already been handled & removed
 			if (this.parent == c.other) {
-				c.other = null; // remove other from the event, leaving it in list
+				c.other = null; // remove parent, leave unhandled other
 				return;
 			}
+			 // both colliders have been handled, can delete the event
 			if ((this.parent == c.parent) && (c.other == null)) {
-				 // both colliders handled, can delete the event
 				Engine.Main.collisions.remove(i);
 				return;
 			}
+			// don't remove unhandled other from the collision event
 			if ((this.parent == c.parent) && (c.other != null)) {
 				// replace with event where other is parent & other field is null
 				Engine.Main.collisions.remove(i);
@@ -73,14 +76,32 @@ public class Collision extends Component {
 
 	@Override
 	public void logic() {
+		if ((this.parent.getClass() == (new Bullet()).getClass())) {
+			// process bullet colliding with obstacle or adversary.
+			// add to event list if necessary
+			// other collisions are ignored
+		}
+		// collisions are either ignored or result in death (bullet, adversary)
 		if (Engine.Main.collisions.contains(new cEvent(this.parent))) {
-			// removes parent GameObject from collision event
+			// remove parent from collision event
 			handleGameObjectCollision(); ;
 			if ((this.parent.getClass() == (new Adversary()).getClass()) ||
 					(this.parent.getClass() == (new Bullet()).getClass()))
 			{
+				// TODO logic: look in GameObjects list, remove parent from it
+				Engine.Main.gameObjs.remove(this.parent);
 				Engine.Main.dead.add(this.parent);
 			}
+		}
+	}
+	
+	@Override
+	public void graphics() {
+		if (Engine.Main.dead.contains(this.parent)) {
+			// TODO remove it from grid display
+			// TODO then remove it from the dead list
+		} else {
+			// no collision graphics, nothing to do here
 		}
 	}
 }

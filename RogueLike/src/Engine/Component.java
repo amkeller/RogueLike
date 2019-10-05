@@ -10,10 +10,8 @@ public class Component {
 	}
 	
 	public void graphics() {
-		
 	}
 	
 	public void logic() {
-		
 	}
 }

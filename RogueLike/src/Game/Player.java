@@ -1,50 +1,31 @@
 package Game;
 
 import java.awt.Color;
+
 import java.awt.event.KeyEvent;
+
+import javax.swing.JLabel;
 
 import Engine.Component;
 import Engine.GameObject;
 import Engine.Main;
+import Engine.GridMap;
 
-public class Player extends GameObject {
-
+public class Player extends Mover {
+	
+	public final static Color myColor = Color.RED;
+	
+	// constsructors
 	public Player(String name) {
 		super(name);
-	}
-
-	public void graphics() {
-		Main.grid.setColor(this.getX(), this.getY(), Color.RED); 
-	}
-
-	public void logic() {
-		if (Main.keyPresses.isEmpty() != true) {
-
-			int keyCode = Main.keyPresses.remove(0);
-
-			if (keyCode == KeyEvent.VK_W) {
-				//				
-			}
-			else if (keyCode == KeyEvent.VK_A) {
-
-			}
-			else if (keyCode == KeyEvent.VK_S) {
-
-			}
-			else if (keyCode == KeyEvent.VK_D) {
-
-			}
-
-
-		}
-	}
-
-
-
-
-
-
-
-
+		this.direction = GridMap.NORTH;
+		this.addComponent(new Move(this));
+	};
+	
+	public Player() {
+		super(null);
+		this.direction = GridMap.NORTH;
+		this.addComponent(new Move(this));
+	};
 
 }

@@ -1,12 +1,23 @@
 package Game;
 
+import java.awt.Color;
+
 import Engine.Component;
 import Engine.GameObject;
 
-public class Adversary extends GameObject {
-
+// the functionality for movement exists in mover
+// except for the functionality for pathfinding movement
+public class Adversary extends Mover {
+	
+	public final static Color myColor = Color.DARK_GRAY;
+	
+	public Adversary(String name) {
+		super(name);
+		this.addComponent(new Move(this));
+	}
 	public Adversary() {
 		super(null);
+		this.addComponent(new Move(this));
 	}
 
 	@Override
