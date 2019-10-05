@@ -3,11 +3,8 @@ package Engine;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import Game.Collision;
 import Game.Player;
-import Game.Collision.cEvent;
-import Game.Death;
-
+import Game.Collision.cEvent;	// collision event
 
 public class Main {
 
@@ -26,7 +23,7 @@ public class Main {
 	public static final ArrayList<GameObject> gameObjs = new ArrayList<GameObject>();
 	public static final ArrayList<cEvent> collisions = new ArrayList<cEvent>();
 	public static final ArrayList<Integer> keyPresses = new ArrayList<Integer>();
-	public static final ArrayList<Death> deaths = new ArrayList<Death>();
+	public static final ArrayList<GameObject> dead = new ArrayList<GameObject>();
 
 	public static void main(String[] args) throws InterruptedException {
 

@@ -2,14 +2,14 @@ package Game;
 
 import Engine.Component;
 import Engine.GameObject;
-import Engine.Main;
+import Game.Adversary;
 
 /**
  * Collisions enable the game to act upon collision events by populating a static
  * list in the game with collision events. The Collision event objects contain names 
  * or ids of the objects that collide. Upon each iteration of a game loop, colliders 
- * that are identified by collision events in the list then update themselves 
- * according to whatever logic is associated with their being part of a collision.
+ * that are identified by collision events in the list update themselves according
+ * to whatever logic is associated with their being part of a collision.
  */
 public class Collision extends Component {
 	
@@ -25,13 +25,7 @@ public class Collision extends Component {
 		
 		/*
 		 * This .equals enables an object to test whether its parent is a member of 
-		 * a cEvent in a collection of cEvents. The .equals is used by the 
-		 * contains functions (and their analogs) in the java collections classes.
-		 * Here, a GameObject looking for itself in a collisions list will construct
-		 * a cEvent using the parent-argument constructor & it will be compared  
-		 * to both colliders of every Collision in a Collisions list to see if the 
-		 * GameObject is part of a collision event. This component's logic method 
-		 * constructs a Collision(parent) for every collision
+		 * a cEvent in a collection of cEvents. 
 		 */
 		@Override
 		public boolean equals(Object other) {
@@ -70,20 +64,22 @@ public class Collision extends Component {
 				return;
 			}
 			if ((this.parent == c.parent) && (c.other != null)) {
-				// replace the event with one where other is parent & no other
+				// replace with event where other is parent & other field is null
 				Engine.Main.collisions.remove(i);
 				Engine.Main.collisions.add(new cEvent(c.other));
 			}
 		}
 	}
-	
+
 	@Override
 	public void logic() {
 		if (Engine.Main.collisions.contains(new cEvent(this.parent))) {
 			// removes parent GameObject from collision event
-			handleGameObjectCollision(); 
-			if (parent.getClass() instanceof Game.Adversary()) {
-				
+			handleGameObjectCollision(); ;
+			if ((this.parent.getClass() == (new Adversary()).getClass()) ||
+					(this.parent.getClass() == (new Bullet()).getClass()))
+			{
+				Engine.Main.dead.add(this.parent);
 			}
 		}
 	}

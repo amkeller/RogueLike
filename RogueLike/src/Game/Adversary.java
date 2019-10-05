@@ -5,8 +5,8 @@ import Engine.GameObject;
 
 public class Adversary extends GameObject {
 
-	public Adversary(String name) {
-		super(name);
+	public Adversary() {
+		super(null);
 	}
 
 	@Override
