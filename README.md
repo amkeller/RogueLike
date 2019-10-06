@@ -14,17 +14,19 @@
 
 <p>-- When an object has its turn, it checks the collisions list & if there was a collision involving itself, it removes itself from the collision event it found itself in, and leaves the collision event in the list if the other object is still in it/hasn't handled its part of the collision yet.</p>
 
-<p>-- I wrote some functions in the Collision class just to get some code in, but haven't hooked it all up yet or sorted it into logic/graphic parts.</p>
+<p>-- Wrote some functions in the Collision class just to get some code in, but haven't hooked it all up yet or sorted it into logic/graphic parts.</p>
 
 <p>-- There is a public static Collsion object created in the Main, called collisionsThrower, that can be used to generate collision events (called cEvents), but I don't think that's permanently necessary. It just helps with the coding right now. I made the collisions a Component so that the abilty to handle and throw collision events (create cEvents and put them into the Engine.Main.collisions list) can be added to the bullet, adversary & player classes.</p>
 
-<p>-- I'm not sure Player needs a collision component as it doesn't really do anything when blocked by an obstacle, except get blocked from moving.</p>
+<p>-- Not sure Player needs a collision component as it doesn't really do anything when blocked by an obstacle, except get blocked from moving.</p>
 
 <p>-- Bullets self-destruct when they collide with an obstacle and Adversaries get destroyed when a bullet collides with it</p>
 
-<p>-- I made a Mover class that that derives from GameObjects, that Bullet, Adversary & Player all derive from, so that we could keep the ideas about how Moving objects work in one place until it's all worked out. Mover objects have direction and move() abilitiies and also need to handle collisions. They're also the only objects that might get destroyed.</p>
+<p>-- Made a Mover class that that derives from GameObjects, that Bullet, Adversary & Player all derive from, so that we could keep the ideas about how Moving objects work in one place until it's all worked out. Mover objects have direction and move() abilitiies and also need to handle collisions. They're also the only objects that might get destroyed.</p>
 
-<p>-- I also started adding Components in the constructors of the derived classes and worked out a few other details like that, but nothing's universally consistent or implemented yet. All the code is just like notes I was taking to get the ideas down until I could get organized enough to start on any one thing, so don't worry about wiping anything out. I can always go back & see what I was thinking by looking at earlier version on github.</p>
+<p>-- Started adding Components in the constructors of the derived classes and worked out a few other details like that, but nothing's universally consistent or implemented yet. All the code is just like notes I was taking to get the ideas down until I could get organized enough to start on any one thing, so don't worry about wiping anything out. I can always go back & see what I was thinking by looking at earlier version on github.</p>
 
-<p>I just started writing stuff to work it all out. Nothing is organized or in a state ready to get all hooked up. And nothing is written in stone & can be replaced by functionality that is someone else's idea of how things should work. I just needed to get some ideas down before I forgot everything that I was thinking.</p>
+<p>-- Added a global ID number and wrote a .equals method for GameObject to make it easier to look to see if a list contains a gameObject by calling .contains on a list</p>
+
+<p>I just started writing stuff to work it all out. Nothing is organized or in a state ready to get all hooked up. And nothing is written in stone & can be replaced by functionality that is someone else's idea of how things should work. I just needed to get some ideas down before I forgot everything that I was thinking. Everything compiles and runs without throwing exceptions, but that's only because nothing in the GameObjects or Engine classes are hooked up yet.</p>
 
