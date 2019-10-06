@@ -26,5 +26,5 @@
 
 <p>-- I also started adding Components in the constructors of the derived classes and worked out a few other details like that, but nothing's universally consistent or implemented yet. All the code is just like notes I was taking to get the ideas down until I could get organized enough to start on any one thing, so don't worry about wiping anything out. I can always go back & see what I was thinking by looking at earlier version on github.</p>
 
-<p>I just started writing stuff to work it all out. Nothing is organized or in a state ready to get all hooked up. And nothing is written in stone & can be replaced by functionality that is someone else's idea of how things should work!</p>
+<p>I just started writing stuff to work it all out. Nothing is organized or in a state ready to get all hooked up. And nothing is written in stone & can be replaced by functionality that is someone else's idea of how things should work. I just needed to get some ideas down before I forgot everything that I was thinking.</p>
 
