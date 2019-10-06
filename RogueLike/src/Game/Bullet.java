@@ -30,10 +30,13 @@ public class Bullet extends Mover {
 	@Override
 	public void blocked() {
 		if (Engine.Main.grid.getColor(this.getY(), this.getX()).equals(Engine.Main.enemy.myColor)) {
+			// throw a collision event that includes the enemy, if this is a collision with an enemy
 			Main.collisions.add(Main.collisionThrower.new cEvent(this, Engine.Main.enemy)); 
-		} else {}
+		} else if (Engine.Main.grid.getColor(this.getY(), this.getX()).equals("whatever obstacles are")) {
+			// bullets disappear and get garbage collected if they hit obstacles
 			Main.grid.setColor(this.getY(), this.getX(), Main.grid.freeColor);
 			Main.gameObjs.remove(this); 
+		}
 	}
 
 }
