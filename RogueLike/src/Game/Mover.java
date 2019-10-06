@@ -10,7 +10,7 @@ import Engine.Main;
 public class Mover extends GameObject {
 	
 	/**
-	 * Mover is a base class for the type of GameObject that moves
+	 * Mover is a base class for the types of GameObject that move
 	 * @param name
 	 */
 	public Mover(String name) {
@@ -22,6 +22,9 @@ public class Mover extends GameObject {
 	private int lastx = 0;
 	private int lasty = 0;
 	
+	public void setDir(int c) { this.direction = c; }
+	public int getDir(int c) { return this.direction; }
+
 	/** override in bullet subclass; bullet destructs if blocked
 	 * by obstacle and destructs the adversary if blocked by 
 	 * adversary
@@ -31,8 +34,6 @@ public class Mover extends GameObject {
 	
 	// override to add functionality only in player class
 	public void shoot() {
-		// player should create bullet with final attributes for 
-		// direction, etc
 	}
 
 	// changes color to move from one cell to the next
@@ -63,9 +64,7 @@ public class Mover extends GameObject {
 		}
 	}
 
-	// Change the GameObject's position to take one step in the ant's new direction.
-	// The entry condition for this function is that the ant has updated its 
-	// direction based on the color of current cell at the time the ant entered it.
+	// set the direction and maybe take one step
 	private void move() {
 		int nextx = this.getX(), nexty = this.getY();
 		switch (this.direction) {
@@ -83,6 +82,7 @@ public class Mover extends GameObject {
 			break;
 		default :
 		}
+		// take a step if there's no obstacle or adversary there
 		if (Main.grid.getColor(nexty, nextx).equals(Main.grid.freeColor)) {
 			// no obstacle, free to move
 			this.lastx = this.getX();
@@ -91,7 +91,7 @@ public class Mover extends GameObject {
 			this.setY(nexty);
 		}
 		else {
-			blocked();
+			blocked(); // process collision
 		}
 	}
 }

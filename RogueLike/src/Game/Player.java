@@ -27,5 +27,14 @@ public class Player extends Mover {
 		this.direction = GridMap.NORTH;
 		this.addComponent(new Move(this));
 	};
+	
+	@Override
+	public void shoot() {
+		Bullet b = new Bullet();
+		b.setX(this.getX());
+		b.setY(this.getY());
+		b.setDir(this.getDir());
+		Main.gameObjs.add(b);
+	}
 
 }

@@ -18,6 +18,13 @@ public abstract class GameObject {
 		Engine.Main.gameObjs.add(this);
 	}
 	
+	// enforce clean up of removed objs during garbage collection
+	protected void finalize() {
+		// set color for open space
+		Main.grid.setColor(this.getY(), this.getX(), Main.grid.freeColor);
+		Main.gameObjs.remove(this); // need to remove all references to obj
+	}
+	
 	public String getName() { return this.name; }
 	public void setName(String name) { this.name = name; }
 	public int getX() { return this.posX; }

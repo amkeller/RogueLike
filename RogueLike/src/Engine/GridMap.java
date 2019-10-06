@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.Map;
 
 
+/* Sina's Grid with some additional GridMap functionality below */
 public class GridMap {
 	
 	/**

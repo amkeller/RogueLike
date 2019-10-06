@@ -2,6 +2,7 @@ package Game;
 
 import Engine.Component;
 import Engine.GameObject;
+import Engine.Main;
 import Game.Adversary;
 import Game.Player;
 import Game.Bullet;
@@ -25,10 +26,12 @@ public class Collision extends Component {
 			this.parent = g;
 		}
 		
-		/*
-		 * This .equals enables an object to test whether its parent is a member of 
-		 * a cEvent in a collection of cEvents. 
-		 */
+		public cEvent(GameObject o1, GameObject o2) {
+			this.parent = o1;
+			this.other = o2;
+		}
+
+		// needed to test whether parent is a member of a cEvent in a collisions list
 		@Override
 		public boolean equals(Object other) {
 			if (this == other) return true;
@@ -46,16 +49,15 @@ public class Collision extends Component {
 		super(parent);
 	}
 	
-	// Only called if a collision event for parent GameObject found in list.
+	// Called if a collision event for parent GameObject found in list.
 	// removes the parent GameObject from the collision event, and removes the
 	// collision event from the list of collisions to be handled if the other
 	// GameObject in the collision has already been handled & removed
-	public void handleGameObjectCollision() {
+	public void handleListCollision() {
 		if (Engine.Main.collisions.contains(new cEvent(this.parent))) {
 			int i = Engine.Main.collisions.indexOf(this);
 			cEvent c = Engine.Main.collisions.get(i);
-			// leave collision event in list if the other object in the
-			// collision hasn't already been handled & removed
+			// other collision object hasn't already been handled & removed
 			if (this.parent == c.other) {
 				c.other = null; // remove parent, leave unhandled other
 				return;
@@ -76,32 +78,23 @@ public class Collision extends Component {
 
 	@Override
 	public void logic() {
-		if ((this.parent.getClass() == (new Bullet()).getClass())) {
-			// process bullet colliding with obstacle or adversary.
-			// add to event list if necessary
-			// other collisions are ignored
-		}
+		// check collisions list for parent
 		// collisions are either ignored or result in death (bullet, adversary)
 		if (Engine.Main.collisions.contains(new cEvent(this.parent))) {
 			// remove parent from collision event
-			handleGameObjectCollision(); ;
+			handleListCollision(); ;
 			if ((this.parent.getClass() == (new Adversary()).getClass()) ||
-					(this.parent.getClass() == (new Bullet()).getClass()))
-			{
-				// TODO logic: look in GameObjects list, remove parent from it
+					(this.parent.getClass() == (new Bullet()).getClass())) {
+				// remove references to dead obj
 				Engine.Main.gameObjs.remove(this.parent);
-				Engine.Main.dead.add(this.parent);
+				Engine.Main.thatGuy = null; 
 			}
 		}
 	}
 	
 	@Override
 	public void graphics() {
-		if (Engine.Main.dead.contains(this.parent)) {
-			// TODO remove it from grid display
-			// TODO then remove it from the dead list
-		} else {
-			// no collision graphics, nothing to do here
-		}
+		// no collision related graphics except for removing it from the grid 
+		// display & that's handled with the cleanup
 	}
 }

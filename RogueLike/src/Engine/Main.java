@@ -18,12 +18,17 @@ import Engine.GridMap;
 
 public class Main {
 	public static GridMap.Grid grid;
+	
+	// GameObjects
+	public static Player thisGuy = new Player("thisGuy");
+	public static Adversary thatGuy = new Adversary("thatGuy");
+	
+	// Events
 	public static InputHandler inputHandler;
 	public static Collision collisionThrower;
 	
-	// GameObjects & event lists
-	public static final Player thisGuy = new Player("thisGuy");
-	public static final Adversary thatGuy = new Adversary("thatGuy");
+	
+	// Event lists
 	public static final ArrayList<GameObject> gameObjs = new ArrayList<GameObject>();
 	public static final ArrayList<cEvent> collisions = new ArrayList<cEvent>();
 	public static final ArrayList<Integer> keyPresses = new ArrayList<Integer>();
