@@ -36,8 +36,6 @@ public class Main {
 	public static InputHandler inputHandler;
 	public static Collision collisionThrower;
 	
-	
-	
 	public static enum games { ANT, SHOOTER };
 	
 	//static GridMap antMap = new GridMap(GRIDSCALE);

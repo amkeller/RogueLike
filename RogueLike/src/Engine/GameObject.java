@@ -9,7 +9,7 @@ public abstract class GameObject {
 	private String name = null;
 	private int posX = 0;
 	private int posY = 0; 
-	public Color myColor = Main.grid.freeColor; // objects start off invisible
+	public Color myColor = null; // objects start off invisible
 	private ArrayList<Component> coms = new ArrayList<Component>();
 	
 	public GameObject(String namein) {

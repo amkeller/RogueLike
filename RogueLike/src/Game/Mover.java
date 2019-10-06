@@ -36,12 +36,6 @@ public class Mover extends GameObject {
 	public void shoot() {
 	}
 
-	// changes color to move from one cell to the next
-	public void moveColor() {
-		Main.grid.setColor(this.lastx, this.lasty, Main.grid.freeColor); 
-		Main.grid.setColor(this.getX(), this.getY(), Color.RED); 
-	}
-
 	// gets direction from last keypress or current keypress
 	public void direction() {
 		if (Main.keyPresses.isEmpty() != true) {
@@ -89,6 +83,9 @@ public class Mover extends GameObject {
 			this.lasty = this.getY();
 			this.setX(nextx);
 			this.setY(nexty);
+			// grid color change associated with a move
+			Main.grid.setColor(this.lastx, this.lasty, Main.grid.freeColor); 
+			Main.grid.setColor(this.getX(), this.getY(), Color.RED); 
 		}
 		else {
 			blocked(); // process collision
