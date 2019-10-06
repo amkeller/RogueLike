@@ -15,7 +15,7 @@ public abstract class GameObject {
 		this.id = idCount;
 		idCount++;
 		// master list of game objects in game
-		Engine.Main.gameObjs.add(this);
+		// Engine.Main.gameObjs.add(this);
 	}
 	
 	// enforce clean up of removed objs during garbage collection

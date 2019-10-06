@@ -20,7 +20,7 @@ public class Bullet extends Mover {
 		super(null);  		// bullets need no name
 		this.id = bulletID;
 		bulletID++;
-		Main.gameObjs.add(this);
+		// add components
 		this.addComponent(new Move(this));
 	}
 	

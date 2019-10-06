@@ -23,7 +23,7 @@ public class Mover extends GameObject {
 	private int lasty = 0;
 	
 	public void setDir(int c) { this.direction = c; }
-	public int getDir(int c) { return this.direction; }
+	public int getDir() { return this.direction; }
 
 	/** override in bullet subclass; bullet destructs if blocked
 	 * by obstacle and destructs the adversary if blocked by 

@@ -17,17 +17,6 @@ import Engine.GridMap;
 	//      Devin Popa
 
 public class Main {
-	public static GridMap.Grid grid;
-	
-	// GameObjects
-	public static Player thisGuy = new Player("thisGuy");
-	public static Adversary thatGuy = new Adversary("thatGuy");
-	
-	// Events
-	public static InputHandler inputHandler;
-	public static Collision collisionThrower;
-	
-	
 	// Event lists
 	public static final ArrayList<GameObject> gameObjs = new ArrayList<GameObject>();
 	public static final ArrayList<cEvent> collisions = new ArrayList<cEvent>();
@@ -36,6 +25,18 @@ public class Main {
 	
 	public static final int GRIDSCALE = 20;
 	public static final int SPEED = 10;
+
+	public static GridMap.Grid grid;
+	
+	// GameObjects
+	public static Player player = new Player("thisGuy");
+	public static Adversary enemy = new Adversary("thatGuy");
+	
+	// Events
+	public static InputHandler inputHandler;
+	public static Collision collisionThrower;
+	
+	
 	
 	public static enum games { ANT, SHOOTER };
 	
@@ -46,6 +47,9 @@ public class Main {
 				
 		// randomly generates about 10-20% obstacles
 		gameMap.init("random");
+		gameObjs.add(player);
+		gameObjs.add(enemy);
+
 		
 		/* ------------------------- shooter game stuff ------------------------------- */
 		
