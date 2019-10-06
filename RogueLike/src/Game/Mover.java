@@ -85,10 +85,10 @@ public class Mover extends GameObject {
 			this.setY(nexty);
 			// grid color change associated with a move
 			Main.grid.setColor(this.lastx, this.lasty, Main.grid.freeColor); 
-			Main.grid.setColor(this.getX(), this.getY(), Color.RED); 
+			Main.grid.setColor(this.getX(), this.getY(), Color.RED);
 		}
 		else {
-			blocked(); // process collision
+			blocked(); // derived classes process collisions differently
 		}
 	}
 }
