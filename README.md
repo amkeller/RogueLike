@@ -10,7 +10,7 @@
 
 <p>-- All objects when they are removed/die get removed from the global gameObjects list & their ability to color squares might be turned off by changing their color attribute to the global free-grid-cell color, Main.grid.freeColor.</p>
 
-<p>-- Collisions involve 2 objects, and there is a collision event that is generated & put into the global collisions list (I started one that isEngine.Main.collisions.</p> 
+<p>-- Collisions involve 2 objects, and there is a collision event that is generated & put into the global collisions list (I started one that is Engine.Main.collisions).</p> 
 
 <p>-- When an object has its turn, it checks the collisions list & if there was a collision involving itself, it removes itself from the collision event it found itself in, and leaves the collision event in the list if the other object is still in it/hasn't handled its part of the collision yet.</p>
 
