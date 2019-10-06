@@ -22,7 +22,9 @@
 
 <p>-- Bullets self-destruct when they collide with an obstacle and Adversaries get destroyed when a bullet collides with it</p>
 
-<p>-- I wrote a Mover class that Bullet, Adversary & Player all derive from, so that I could keep the ideas about how Moving objects work in one place until it's all worked out. Mover objects have direction and move() abilitiies and also need to handle collisions. They're also the only objects that might get destroyed.</p>
+<p>-- I made a Mover class that that derives from GameObjects, that Bullet, Adversary & Player all derive from, so that we could keep the ideas about how Moving objects work in one place until it's all worked out. Mover objects have direction and move() abilitiies and also need to handle collisions. They're also the only objects that might get destroyed.</p>
+
+<p>-- I also started adding Components in the constructors of the derived classes and worked out a few other details like that, but nothing's universally consistent or implemented yet. All the code is just like notes I was taking to get the ideas down until I could get organized enough to start on any one thing, so don't worry about wiping anything out. I can always go back & see what I was thinking by looking at earlier version on github.</p>
 
 <p>I just started writing stuff to work it all out. Nothing is organized or in a state ready to get all hooked up. And nothing is written in stone & can be replaced by functionality that is someone else's idea of how things should work!</p>
 
