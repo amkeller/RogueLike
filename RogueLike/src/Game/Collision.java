@@ -1,5 +1,7 @@
 package Game;
 
+import java.awt.Color;
+
 import Engine.Component;
 import Engine.GameObject;
 import Engine.Main;
@@ -85,9 +87,11 @@ public class Collision extends Component {
 			handleListCollision(); ;
 			if ((this.parent.getClass() == (new Adversary()).getClass()) ||
 					(this.parent.getClass() == (new Bullet()).getClass())) {
-				// remove references to dead obj
+				// remove adversary references so dead obj can get garbage collected
 				Engine.Main.gameObjs.remove(this.parent);
-				Engine.Main.thatGuy = null; 
+				Engine.Main.enemy = null; 
+				// make sure it no longer appears in the grid
+				this.parent.myColor = Main.grid.freeColor;
 			}
 		}
 	}

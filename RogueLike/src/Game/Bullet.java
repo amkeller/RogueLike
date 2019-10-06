@@ -13,14 +13,14 @@ import Game.Collision;
 // putting adversary into Main.dead list if blocked by adversary
 public class Bullet extends Mover {
 	
-	public final static Color myColor = Color.BLUE;
 	static int bulletID = 0;
 	int id;
 	public Bullet() {
 		super(null);  		// bullets need no name
 		this.id = bulletID;
 		bulletID++;
-		// add components
+		myColor = Color.BLUE;
+		// add components here?
 		this.addComponent(new Move(this));
 	}
 	
@@ -29,8 +29,8 @@ public class Bullet extends Mover {
 	 */
 	@Override
 	public void blocked() {
-		if (Engine.Main.grid.getColor(this.getY(), this.getX()).equals(Adversary.myColor)) {
-			Main.collisions.add(Main.collisionThrower.new cEvent(this, Engine.Main.thatGuy)); 
+		if (Engine.Main.grid.getColor(this.getY(), this.getX()).equals(Engine.Main.enemy.myColor)) {
+			Main.collisions.add(Main.collisionThrower.new cEvent(this, Engine.Main.enemy)); 
 		} else {}
 			Main.grid.setColor(this.getY(), this.getX(), Main.grid.freeColor);
 			Main.gameObjs.remove(this); 

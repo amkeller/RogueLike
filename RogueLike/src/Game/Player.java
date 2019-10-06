@@ -13,12 +13,12 @@ import Engine.GridMap;
 
 public class Player extends Mover {
 	
-	public final static Color myColor = Color.RED;
-	
 	// constsructors
 	public Player(String name) {
 		super(name);
 		this.direction = GridMap.NORTH;
+		myColor = Color.RED;
+		// add components here?
 		this.addComponent(new Move(this));
 	};
 	

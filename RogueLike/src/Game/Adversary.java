@@ -9,7 +9,7 @@ import Engine.GameObject;
 // except for the functionality for pathfinding movement
 public class Adversary extends Mover {
 	
-	public final static Color myColor = Color.DARK_GRAY;
+	public Color myColor = Color.DARK_GRAY;
 	
 	public Adversary(String name) {
 		super(name);
