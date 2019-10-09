@@ -28,7 +28,7 @@ public class GridMap {
 	public class Grid extends JPanel {
 		
 		protected static final long serialVersionUID = 0L;
-		protected static final int MARGIN_SIZE = 5;
+		public static final int MARGIN_SIZE = 5;
 		protected int scaleH;
 		protected int scaleW;
 		protected Color[][] colors;
@@ -67,6 +67,13 @@ public class GridMap {
 		
 		public int getWd(){
 			return scaleW;
+		}
+		
+		// added my mmills 10/9/19
+		public boolean inBounds(int row, int col) {
+			row += MARGIN_SIZE;
+			col += MARGIN_SIZE;
+			return row >= MARGIN_SIZE && col >= MARGIN_SIZE && row < scaleH + MARGIN_SIZE && col < scaleW + MARGIN_SIZE;
 		}
 		
 		// added amk 09/02/2019
@@ -208,7 +215,13 @@ public class GridMap {
 		if (filePath.equals("random")) {
 			for (int i = 0; i < scaleH; i++) {
 			    for (int j = 0; j < scaleW; j++) {
-			        data[i][j] = (int)(Math.ceil(10*Math.random())/8);
+			    		if (i == 0 && j == 0) {
+			    			data[i][j] = 0;
+			    		}
+			    		else {
+			    			data[i][j] = (int)(Math.ceil(10*Math.random())/8);
+//			    			data[i][j] = 0;
+			    		}
 			    }
 			}			
 		} else {
@@ -280,10 +293,10 @@ public class GridMap {
 		for (int row = 0; row < scaleH; row++) {
 			for (int col = 0; col < scaleW; col++) {
 				switch (this.terrain[row][col]) {
-				case 0: color = Color.white; break;
+				case 0: color = Color.WHITE; break;
 				case 1: color = Color.green; break;
-				case 2: color = Color.magenta; break;
-				case 3: color = Color.cyan; break;
+				case 2: color = Color.RED;
+//				case 3: color = Color.cyan; break;
 				default: break;
 				}
 				this.grid.setColor(row, col, color);
