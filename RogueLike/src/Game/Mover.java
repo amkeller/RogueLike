@@ -56,36 +56,46 @@ public class Mover extends GameObject {
 				shoot();
 			}
 		}
+		else {
+			this.direction = -1;
+		}
 	}
 
 	// set the direction and maybe take one step
-	private void move() {
-		int nextx = this.getX(), nexty = this.getY();
+	public void move() {
+		int nextX = this.getX(), nextY = this.getY();
 		switch (this.direction) {
 		case GridMap.NORTH :
-			nexty -= 1;
+			nextX -= 1;
 			break;
 		case GridMap.EAST :
-			nextx += 1;
+			nextY += 1;
 			break;
 		case GridMap.SOUTH :
-			nexty += 1;
+			nextX += 1;
 			break;
 		case GridMap.WEST :
-			nextx -= 1;
+			nextY -= 1;
+			break;
+		case -1 :
 			break;
 		default :
 		}
+		
+				
 		// take a step if there's no obstacle or adversary there
-		if (Main.grid.getColor(nexty, nextx).equals(Main.grid.freeColor)) {
+		if (Main.gameMap.grid.getColor(nextX, nextY).equals(Main.gameMap.grid.freeColor) &&
+				Main.gameMap.grid.inBounds(nextX, nextY)) {
+						
 			// no obstacle, free to move
 			this.lastx = this.getX();
 			this.lasty = this.getY();
-			this.setX(nextx);
-			this.setY(nexty);
+			this.setX(nextX);
+			this.setY(nextY);
+			
 			// grid color change associated with a move
-			Main.grid.setColor(this.lastx, this.lasty, Main.grid.freeColor); 
-			Main.grid.setColor(this.getX(), this.getY(), Color.RED);
+			Main.gameMap.grid.setColor(this.lastx, this.lasty, Main.gameMap.grid.freeColor); 
+			Main.gameMap.grid.setColor(this.getX(), this.getY(), Color.RED);
 		}
 		else {
 			blocked(); // derived classes process collisions differently
