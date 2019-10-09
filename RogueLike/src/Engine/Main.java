@@ -1,8 +1,6 @@
 package Engine;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.awt.Color;
 
 import Game.Player;
 import Game.Adversary;
@@ -24,9 +22,9 @@ public class Main {
 	public static final ArrayList<GameObject> dead = new ArrayList<GameObject>();
 	
 	public static final int GRIDSCALE = 20;
-	public static final int SPEED = 10;
+//	public static final int SPEED = 10;
 
-	public static GridMap.Grid grid;
+//	public static GridMap.Grid grid;
 	
 	// GameObjects
 	public static Player player = new Player("thisGuy");
@@ -39,7 +37,7 @@ public class Main {
 	public static enum games { ANT, SHOOTER };
 	
 	//static GridMap antMap = new GridMap(GRIDSCALE);
-	static GridMap gameMap = new GridMap(GRIDSCALE);
+	public static GridMap gameMap = new GridMap(GRIDSCALE);
 
 	public static void main(String[] args) throws InterruptedException {
 				
@@ -49,6 +47,9 @@ public class Main {
 		gameObjs.add(enemy);
 
 		
+		run();
+		
+		
 		/* ------------------------- shooter game stuff ------------------------------- */
 		
 	}
@@ -56,9 +57,25 @@ public class Main {
 	public static void initialize() {
 	}
 	
-	private void run() {
+	private static void run() throws InterruptedException {
+		
+		inputHandler = new InputHandler(gameMap.grid);
+
+		
+		gameMap.grid.setFocusable(true);
+
+		
+		while (true) {
+			
+			gameMap.grid.requestFocusInWindow();
+			
+			update();
+		}
 	}
 	
-	private void update() {
+	private static void update() throws InterruptedException {
+		player.direction();
+		player.move();
+		Thread.sleep(50);
 	}
 }
