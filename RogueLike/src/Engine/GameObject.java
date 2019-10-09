@@ -3,6 +3,8 @@ package Engine;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import Engine.GridMap.Grid;
+
 public abstract class GameObject {
 	private static int idCount = 0;
 	private int id;
@@ -23,7 +25,7 @@ public abstract class GameObject {
 	// enforce clean up of removed objs during garbage collection
 	protected void finalize() {
 		// set color for open space
-		Main.grid.setColor(this.getY(), this.getX(), Main.grid.freeColor);
+		Main.gameMap.grid.setColor(this.getY(), this.getX(), Main.gameMap.grid.freeColor);
 		Main.gameObjs.remove(this); // need to remove all references to obj
 	}
 	
