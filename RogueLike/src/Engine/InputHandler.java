@@ -30,8 +30,8 @@ public class InputHandler implements KeyListener {
 		@Override
 		public void keyReleased(KeyEvent e) {
 			// do we want to do this for shooter game?
-			// int keyCode = e.getKeyCode();
-			// Main.keyPresses.remove(new Integer(keyCode));
+			int keyCode = e.getKeyCode();
+			Main.keyPresses.remove(new Integer(keyCode));
 		}
 	}
 
