@@ -67,7 +67,6 @@ public class Main {
 		for (GameObject go : gameObjs) {
 			for (Component c : go.components) {
 				if (c.getClass() == Input.class) {
-					System.out.println(go.getClass() + ", " + c.getClass());
 					c.update();
 					c.render();
 				}
