@@ -36,7 +36,7 @@ public class Motion extends Component {
 
 		int lastx, lasty;
 
-		// take a step if there's no obstacle or adversary there
+		// take a step if there's no obstacle or adversary there & we're in bounds
 		if (Main.gameMap.grid.getColor(nextX, nextY).equals(Main.gameMap.freeColor) &&
 				Main.gameMap.grid.inBounds(nextX, nextY)) {
 						
@@ -46,13 +46,16 @@ public class Motion extends Component {
 			parent.setX(nextX);
 			parent.setY(nextY);
 			
-			// grid color change associated with a move
-			Main.gameMap.grid.setColor(lastx, lasty, Main.gameMap.freeColor); 
+			// color old grid cell free if parent made a move
+			if (lastx != parent.getX() || lasty != parent.getY()) {
+				Main.gameMap.grid.setColor(lastx, lasty, Main.gameMap.freeColor); 
+			}
 			
 			// if player, take only one step, so reset direction to STOP here
 			if (parent.getName() == "player") parent.setDirection(GridMap.STOP);
 		}
-		else {			
+		// collision case: cell is not free but we're in bounds
+		else if (Main.gameMap.grid.inBounds(nextX, nextY)){	
 			// get other GameObject in the collision
 			GameObject other = null;
 			for (GameObject go : Engine.Main.gameObjs) {
@@ -62,6 +65,8 @@ public class Motion extends Component {
 				}
 			}
 			if (other != null) {  // sanity check
+				
+				// the only collisions we're processing right now are bullet ones
 				if (parent.getName() == "bullet") {
 					
 				    if (other.getName() == "adversary") {
@@ -72,7 +77,15 @@ public class Motion extends Component {
 				    this.parent.setColor(Main.gameMap.freeColor);
 				 
 				}
-			}		
+				return;
+			}
+		}
+		// if we  got here we're probably at a grid border or out of bounds
+		if (parent.getName() == "bullet") {
+			
+			Main.gameObjs.remove(this.parent);
+			this.parent.setColor(Main.gameMap.freeColor);
+			    
 		}
 	}
 	
