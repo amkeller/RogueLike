@@ -52,20 +52,36 @@ public class Main {
 	}
 	
 	public static void initialize() {
-		player.setX(0);
-		player.setY(gameMap.scaleH);
-		adversary.setX(gameMap.scaleW);
-		adversary.setY(0);
+		player.setX(gameMap.scaleH-1);
+		player.setY(0);
+		adversary.setX(0);
+		adversary.setY(gameMap.scaleW-1);
 	}
 	
 	private static void processInputs() {
 		// iterate thru gameObjs list & for every gameObj that contains an Input component,  
 		// execute update() & render()
+		for (GameObject go : gameObjs) {
+			for (Component c : go.components) {
+				if (c.getClass() == Input.class) {
+					c.update();
+					c.render();
+				}
+			}
+		}
 	}
 	
 	private static void processMotion() {
 		// iterate thru gameObjs list & for every gameObj that contains a Motion component,  
 		// execute update() & render()
+		for (GameObject go : gameObjs) {
+			for (Component c : go.components) {
+				if (c.getClass() == Motion.class) {
+					c.update();
+					c.render();
+				}
+			}
+		}
 	}
 	
 	private static void processPath() {
@@ -76,19 +92,33 @@ public class Main {
 	private static void processCollisions() {
 		// iterate thru gameObjs list & for every gameObj that contains a Collision component,  
 		// execute update() & render()
+		for (GameObject go : gameObjs) {
+			for (Component c : go.components) {
+				if (c.getClass() == Collision.class) {
+					c.update();
+					c.render();
+				}
+			}
+		}
 	}
 	
 	
 	private static void run() throws InterruptedException {
 		
+		initialize();
 		gameMap.grid.setFocusable(true);
 		
 		while (true) {
 			processInputs();
 			processMotion();
 			processCollisions();
+			
+			// stuff for redrawing grid & etc needs to go here
+			
 			gameMap.grid.requestFocusInWindow();
+			Thread.sleep(50);
 		}
+		
 	}
 	
 
