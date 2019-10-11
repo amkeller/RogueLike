@@ -14,6 +14,8 @@ public class Motion extends Component {
 	// updates the position of a moving object
 	@Override
 	public void update() {
+		System.out.println(parent.getName() + ": " + "x: " + parent.getX() + ", y: "  + parent.getY() 
+		+ ", " +  parent.toString());
 		int nextX = parent.getX(), nextY = parent.getY();
 		switch (parent.getDirection()) {
 		case GridMap.NORTH :
@@ -47,7 +49,7 @@ public class Motion extends Component {
 			parent.setY(nextY);
 			
 			// color old grid cell free if parent made a move
-			if (lastx != parent.getX() || lasty != parent.getY()) {
+			if (parent.getName() != "bullet" && (lastx != parent.getX() || lasty != parent.getY())) {
 				Main.gameMap.grid.setColor(lastx, lasty, Main.gameMap.freeColor); 
 			}
 			

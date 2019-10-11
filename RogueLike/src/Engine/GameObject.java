@@ -67,4 +67,16 @@ public abstract class GameObject {
 		if (this.id == g.getId()) return true;
 		return false;
 	}
+	
+	public void update() {
+		for (Component c : components) {
+			c.update();
+		}
+	}
+	public void render()  {
+		for (Component c : components) {
+			c.render();
+		}
+		
+	}
 }

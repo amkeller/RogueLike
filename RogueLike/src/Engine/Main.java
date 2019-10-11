@@ -78,7 +78,7 @@ public class Main {
 		// iterate thru gameObjs list & for every gameObj that contains a Motion component,  
 		// execute update() & render()
   		for (GameObject go : gameObjs) {
-			for (Component c : go.components) {
+  			for (Component c : go.components) {
 				if (c.getClass() == Motion.class) {
 					c.update();
 					c.render();
@@ -126,14 +126,15 @@ public class Main {
 		
 		while (true) {
 			processInputs();
+			processGameObjects();
 			processMotion();
+			processGameObjects();
 			processCollisions();
 			processGameObjects();
 			
 			// stuff for redrawing grid & etc needs to go here
-			
-			gameMap.grid.requestFocusInWindow();
-			Thread.sleep(50);
+ 			gameMap.grid.requestFocusInWindow();
+			Thread.sleep(5000);
 		}
 		
 	}

@@ -16,7 +16,7 @@ public class Input extends Component {
 	// gets direction from last keypress or current keypress
 	@Override
 	public void update() {
-		if (Main.keyPresses.isEmpty() != true) {
+ 		if (Main.keyPresses.isEmpty() != true) {
 			int keyCode = Main.keyPresses.remove(0);
 			if (keyCode == KeyEvent.VK_W) {
 				parent.setDirection(GridMap.NORTH); // up
@@ -41,7 +41,6 @@ public class Input extends Component {
 					b.setX(parent.getX());
 					b.setY(parent.getY());
 					b.setDirection(((Player)parent).getShootDir());
-					Main.addGameObjs.add(b);
 					Main.addGameObjs.add(b);
 				}
 			}
