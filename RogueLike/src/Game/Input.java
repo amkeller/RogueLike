@@ -47,7 +47,7 @@ public class Input extends Component {
 			}
 		}
 		else {
-			parent.setDirection(-1);
+			parent.setDirection(GridMap.STOP);
 		}
 	}
 	
