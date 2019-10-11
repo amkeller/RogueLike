@@ -53,6 +53,8 @@ public class Motion extends Component {
 			
 			// if player, take only one step, so reset direction to STOP here
 			if (parent.getName() == "player") parent.setDirection(GridMap.STOP);
+			
+			return;
 		}
 		// collision case: cell is not free but we're in bounds
 		else if (Main.gameMap.grid.inBounds(nextX, nextY)){	
