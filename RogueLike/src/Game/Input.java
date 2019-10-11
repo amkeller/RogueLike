@@ -41,8 +41,8 @@ public class Input extends Component {
 					b.setX(parent.getX());
 					b.setY(parent.getY());
 					b.setDirection(((Player)parent).getShootDir());
-					Main.gameObjs.add(b);
-					Main.gameObjs.add(b);
+					Main.addGameObjs.add(b);
+					Main.addGameObjs.add(b);
 				}
 			}
 		}

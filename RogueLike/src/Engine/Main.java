@@ -1,6 +1,7 @@
 package Engine;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Game.Player;
 import Game.Adversary;
@@ -21,6 +22,8 @@ public class Main {
 	public static final ArrayList<GameObject> gameObjs = new ArrayList<GameObject>();
 	public static final ArrayList<cEvent> collisions = new ArrayList<cEvent>();
 	public static final ArrayList<Integer> keyPresses = new ArrayList<Integer>();
+	public static final ArrayList<GameObject> addGameObjs = new ArrayList<GameObject>();
+	public static final ArrayList<GameObject> removeGameObjs = new ArrayList<GameObject>();
 	
 	public static final int GRIDSCALE = 20;
 	
@@ -75,7 +78,7 @@ public class Main {
 	private static void processMotion() {
 		// iterate thru gameObjs list & for every gameObj that contains a Motion component,  
 		// execute update() & render()
-		for (GameObject go : gameObjs) {
+  		for (GameObject go : gameObjs) {
 			for (Component c : go.components) {
 				if (c.getClass() == Motion.class) {
 					c.update();
@@ -103,6 +106,19 @@ public class Main {
 		}
 	}
 	
+	private static void processGameObjects() {
+		for (GameObject go : addGameObjs) {
+			for (Component c : go.components) {
+				gameObjs.add(go);
+			}
+		}
+		for (GameObject go : removeGameObjs) {
+			for (Component c : go.components) {
+				gameObjs.remove(go);
+			}
+		}
+	}
+	
 	
 	private static void run() throws InterruptedException {
 		
@@ -113,6 +129,7 @@ public class Main {
 			processInputs();
 			processMotion();
 			processCollisions();
+			processGameObjects();
 			
 			// stuff for redrawing grid & etc needs to go here
 			

@@ -75,7 +75,7 @@ public class Motion extends Component {
 					   Main.collisions.add(Engine.Main.collisionThrower.new cEvent(other));
 				    }
 				    // remove bullet from the game if if hits anything
-				    Main.gameObjs.remove(this.parent);
+				    Main.removeGameObjs.add(this.parent);
 				    this.parent.setColor(Main.gameMap.freeColor);
 				 
 				}
@@ -85,7 +85,7 @@ public class Motion extends Component {
 		// if we  got here we're probably at a grid border or out of bounds
 		if (parent.getName() == "bullet") {
 			
-			Main.gameObjs.remove(this.parent);
+			Main.removeGameObjs.add(this.parent);
 			this.parent.setColor(Main.gameMap.freeColor);
 			    
 		}
