@@ -1,6 +1,7 @@
 package Engine;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -14,7 +15,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
+
+import Game.Obstacle;
 
 
 /* Sina's Grid with some additional GridMap functionality below */
@@ -32,7 +36,6 @@ public class GridMap {
 		protected int scaleH;
 		protected int scaleW;
 		protected Color[][] colors;
-		public final Color freeColor = Color.WHITE;
 		private static final int SQUARE_SIZE = 15;  // pixel size of each square
 		private JFrame frame;
 		
@@ -44,11 +47,12 @@ public class GridMap {
 			this.scaleW = 2*scale; // has to match grid's scaleW
 			int overallSizeH = scaleH + 2 * MARGIN_SIZE;
 			int overallSizeW = scaleW + 2 * MARGIN_SIZE;
+			Color background = Color.WHITE;
 			colors = new Color[overallSizeH][overallSizeW];
 			for (int i = 0; i < overallSizeH; i++)
 				for (int j = 0; j < overallSizeW; j++)
 					colors[i][j] = Color.LIGHT_GRAY;
-			setGridColor(this.freeColor); // the color of an empty space
+			setGridColor(background); // the color of an empty space
 			javax.swing.SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
 					Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
@@ -196,6 +200,7 @@ public class GridMap {
 	protected int scaleH;
 	protected int scaleW;
 	protected int[][] terrain;  // map of landscape: water, trees, grass
+	public final Color freeColor = Color.WHITE;
 	
 	public GridMap(int scale) {
 		this.scaleH = scale;
@@ -210,7 +215,7 @@ public class GridMap {
 	}
 	
 	// right now just load the 1 map & use graph traversal weights for terrain too
-	public void init(String filePath) {
+	public void init(String filePath, ArrayList<GameObject> gameObjList) {
 		int[][] data = new int[scaleH][scaleW];
 		if (filePath.equals("random")) {
 			for (int i = 0; i < scaleH; i++) {
@@ -219,9 +224,10 @@ public class GridMap {
 			    			data[i][j] = 0;
 			    		}
 			    		else {
-			    			data[i][j] = (int)(Math.ceil(10*Math.random())/8);
-//			    			data[i][j] = 0;
+			    			// to increase number of  obstacles, decrease denominator
+			    			data[i][j] = (int)(Math.ceil(10*Math.random())/9);
 			    		}
+			    		gameObjList.add(new Obstacle("o"+i+j, i, j));
 			    }
 			}			
 		} else {
@@ -282,7 +288,6 @@ public class GridMap {
 			System.out.print("\n");
 		}
 		return data;
-		//return terrain;
 	}
 
 	
@@ -296,7 +301,6 @@ public class GridMap {
 				case 0: color = Color.WHITE; break;
 				case 1: color = Color.green; break;
 				case 2: color = Color.RED;
-//				case 3: color = Color.cyan; break;
 				default: break;
 				}
 				this.grid.setColor(row, col, color);

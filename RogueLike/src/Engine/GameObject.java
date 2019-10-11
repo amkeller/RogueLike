@@ -11,6 +11,7 @@ public abstract class GameObject {
 	private String name = null;
 	private int posX = 0;
 	private int posY = 0; 
+	private int direction=GridMap.NORTH;
 	public Color myColor = null; // objects start off invisible
 	private ArrayList<Component> coms = new ArrayList<Component>();
 	
@@ -22,20 +23,17 @@ public abstract class GameObject {
 		// Engine.Main.gameObjs.add(this);
 	}
 	
-	// enforce clean up of removed objs during garbage collection
-	protected void finalize() {
-		// set color for open space
-		Main.gameMap.grid.setColor(this.getY(), this.getX(), Main.gameMap.grid.freeColor);
-		Main.gameObjs.remove(this); // need to remove all references to obj
-	}
-	
 	public String getName() { return this.name; }
 	public void setName(String name) { this.name = name; }
 	public int getX() { return this.posX; }
 	public int getY() { return this.posY; }
+	public int getDirection() { return this.direction; };
 	public void setX(int x) { this.posX = x; }
 	public void setY(int y) { this.posY = y; }
+	public void setDirection(int dir) { this.direction = dir; };
 	public int getId() { return this.id; }
+	public Color getColor() { return this.myColor; }
+	public void setColor(Color cin)  { this.myColor = cin; }
  	
 	public void addComponent(Component component) {
 		if (!coms.contains(component)) {

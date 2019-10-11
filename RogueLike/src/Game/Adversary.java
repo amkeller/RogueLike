@@ -7,31 +7,22 @@ import Engine.GameObject;
 
 // the functionality for movement exists in mover
 // except for the functionality for pathfinding movement
-public class Adversary extends Mover {
+public class Adversary extends GameObject {
 		
 	public Adversary(String name) {
 		super(name);
 		myColor = Color.DARK_GRAY;
-		// add components here?
-		this.addComponent(new Move(this));
+		this.addComponent(new Motion(this));
+		this.addComponent(new Collision(this));
+		//this.addComponent(new Pathfinder(this));
 	}
 	public Adversary() {
-		super(null);
-		this.addComponent(new Move(this));
-	}
-
-	@Override
-	public void addComponent(Component component) {		
-	}
-
-	@Override
-	public boolean removeComponent(Class Object) {
-		return false;
-	}
-
-	@Override
-	public Component getComponent(Class Object) {
-		return null;
+		super("adversary");
+		myColor = Color.DARK_GRAY;
+		this.addComponent(new Motion(this));
+		this.addComponent(new Collision(this));
+		this.addComponent(new Collision(this));
+		//this.addComponent(new Pathfinder(this));
 	}
 
 }

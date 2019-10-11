@@ -1,14 +1,9 @@
 package Game;
 
-import java.awt.Color;
-
 import Engine.Component;
 import Engine.GameObject;
 import Engine.Main;
-import Game.Adversary;
-import Game.Player;
-import Game.Bullet;
-import Game.Obstacle;
+
 
 /**
  * Collisions enable the game to act upon collision events by populating a static
@@ -51,13 +46,14 @@ public class Collision extends Component {
 		super(parent);
 	}
 	
+	// helper function for update()
 	// Called if a collision event for parent GameObject found in list.
 	// removes the parent GameObject from the collision event, and removes the
 	// collision event from the list of collisions to be handled if the other
 	// GameObject in the collision has already been handled & removed
-	public void handleListCollision() {
+	public void manageCollisionsList() {
 		if (Engine.Main.collisions.contains(new cEvent(this.parent))) {
-			int i = Engine.Main.collisions.indexOf(this);
+			int i = Engine.Main.collisions.indexOf(new cEvent(this.parent));
 			cEvent c = Engine.Main.collisions.get(i);
 			// other collision object hasn't already been handled & removed
 			if (this.parent == c.other) {
@@ -79,26 +75,27 @@ public class Collision extends Component {
 	}
 
 	@Override
-	public void logic() {
-		// check collisions list for parent
-		// collisions are either ignored or result in death (bullet, adversary)
+	public void update() {
+		// check if a parent-related cEvent is in the list
 		if (Engine.Main.collisions.contains(new cEvent(this.parent))) {
 			// remove parent from collision event
-			handleListCollision(); ;
-			if ((this.parent.getClass() == (new Adversary()).getClass()) ||
-					(this.parent.getClass() == (new Bullet()).getClass())) {
-				// remove adversary references so dead obj can get garbage collected
+			manageCollisionsList();
+			// process parent's collision, currently only the adversary needs this
+			if (this.parent.getName() == "adversary") {
 				Engine.Main.gameObjs.remove(this.parent);
-				Engine.Main.enemy = null; 
-				// make sure it no longer appears in the grid
-				this.parent.myColor = Main.grid.freeColor;
+				this.parent.setColor(Main.gameMap.freeColor);
+				Engine.Main.adversary = null;
+			}
+			// we're not actually generating bullet collision events right now
+			if (this.parent.getName() == "bullet") {
+				Engine.Main.gameObjs.remove(this.parent);
+				this.parent.setColor(Main.gameMap.freeColor);
 			}
 		}
 	}
 	
 	@Override
-	public void graphics() {
-		// no collision related graphics except for removing it from the grid 
-		// display & that's handled with the cleanup
+	public void render() {
+		Main.gameMap.grid.setColor(parent.getX(), parent.getY(), this.parent.getColor());
 	}
 }

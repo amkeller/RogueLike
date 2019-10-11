@@ -2,41 +2,31 @@ package Game;
 
 import java.awt.Color;
 
-import Engine.Component;
 import Engine.GameObject;
-import Engine.GridMap;
 import Engine.Main;
 import Game.Collision;
 
 // the functionality for bullets are in Mover, except for the
 // functionality of destructing when blocked by obstacle or
 // putting adversary into Main.dead list if blocked by adversary
-public class Bullet extends Mover {
+public class Bullet extends GameObject {
 	
 	static int bulletID = 0;
 	int id;
+	
 	public Bullet() {
-		super(null);  		// bullets need no name
-		this.id = bulletID;
-		bulletID++;
+		super("bullet");
 		myColor = Color.BLUE;
 		// add components here?
-		this.addComponent(new Move(this));
-	}
+		this.addComponent(new Motion(this));
+		this.addComponent(new Collision(this));	}
 	
-	/** override Mover class shoot(), bullet destructs if blocked
-	 * by obstacle and destructs the adversary if blocked by adversary
-	 */
-	@Override
-	public void blocked() {
-		if (Engine.Main.grid.getColor(this.getY(), this.getX()).equals(Engine.Main.enemy.myColor)) {
-			// throw a collision event that includes the enemy, if this is a collision with an enemy
-			Main.collisions.add(Main.collisionThrower.new cEvent(this, Engine.Main.enemy)); 
-		} else if (Engine.Main.grid.getColor(this.getY(), this.getX()).equals("whatever obstacles are")) {
-			// bullets disappear and get garbage collected if they hit obstacles
-			Main.grid.setColor(this.getY(), this.getX(), Main.grid.freeColor);
-			Main.gameObjs.remove(this); 
-		}
+	public Bullet(String name) {
+		super(name);  		// bullets need no name
+		myColor = Color.BLUE;
+		// add components here?
+		this.addComponent(new Motion(this));
+		this.addComponent(new Collision(this));
 	}
 
 }

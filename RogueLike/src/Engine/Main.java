@@ -19,36 +19,31 @@ public class Main {
 	public static final ArrayList<GameObject> gameObjs = new ArrayList<GameObject>();
 	public static final ArrayList<cEvent> collisions = new ArrayList<cEvent>();
 	public static final ArrayList<Integer> keyPresses = new ArrayList<Integer>();
-	public static final ArrayList<GameObject> dead = new ArrayList<GameObject>();
 	
 	public static final int GRIDSCALE = 20;
-//	public static final int SPEED = 10;
-
-//	public static GridMap.Grid grid;
+	
+	//static GridMap antMap = new GridMap(GRIDSCALE);
+	public static GridMap gameMap = new GridMap(GRIDSCALE);
 	
 	// GameObjects
-	public static Player player = new Player("thisGuy");
-	public static Adversary enemy = new Adversary("thatGuy");
+	public static Player player = new Player("player");
+	public static Adversary adversary = new Adversary("adversary");
 	
 	// Events
-	public static InputHandler inputHandler;
+	public static InputHandler inputHandler = new InputHandler(gameMap.grid);
 	public static Collision collisionThrower;
 	
 	public static enum games { ANT, SHOOTER };
 	
-	//static GridMap antMap = new GridMap(GRIDSCALE);
-	public static GridMap gameMap = new GridMap(GRIDSCALE);
 
 	public static void main(String[] args) throws InterruptedException {
-				
-		// randomly generates about 10-20% obstacles
-		gameMap.init("random");
-		gameObjs.add(player);
-		gameObjs.add(enemy);
 
+		// randomly generates about 10-20% obstacles
+		gameMap.init("random", gameObjs);
+		gameObjs.add(player);
+		gameObjs.add(adversary);
 		
 		run();
-		
 		
 		/* ------------------------- shooter game stuff ------------------------------- */
 		
@@ -57,25 +52,38 @@ public class Main {
 	public static void initialize() {
 	}
 	
+	private static void processInputs() {
+		// iterate thru gameObjs list & for every gameObj that contains an Input component,  
+		// execute update() & render()
+	}
+	
+	private static void processMotion() {
+		// iterate thru gameObjs list & for every gameObj that contains a Motion component,  
+		// execute update() & render()
+	}
+	
+	private static void processPath() {
+		// iterate thru gameObjs list & for every gameObj that contains a  Pathfiinder component,  
+		//  execute update() & render()
+	}
+	
+	private static void processCollisions() {
+		// iterate thru gameObjs list & for every gameObj that contains a Collision component,  
+		// execute update() & render()
+	}
+	
+	
 	private static void run() throws InterruptedException {
 		
-		inputHandler = new InputHandler(gameMap.grid);
-
-		
 		gameMap.grid.setFocusable(true);
-
 		
 		while (true) {
-			
+			processInputs();
+			processMotion();
+			processCollisions();
 			gameMap.grid.requestFocusInWindow();
-			
-			update();
 		}
 	}
 	
-	private static void update() throws InterruptedException {
-		player.direction();
-		player.move();
-		Thread.sleep(50);
-	}
+
 }

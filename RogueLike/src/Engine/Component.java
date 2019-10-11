@@ -9,9 +9,9 @@ public class Component {
 		parent = object;
 	}
 	
-	public void graphics() {
+	public void update() {
+	}
+	public void render() {
 	}
 	
-	public void logic() {
-	}
 }
