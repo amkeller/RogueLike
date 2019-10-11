@@ -2,10 +2,7 @@ package Game;
 
 import java.awt.Color;
 
-
-import Engine.Component;
 import Engine.GameObject;
-import Game.Collision.cEvent;
 
 /*
  * What exactly is an obstacle supposed to do except block people & stop bullets?

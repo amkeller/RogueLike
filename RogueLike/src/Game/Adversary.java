@@ -2,7 +2,6 @@ package Game;
 
 import java.awt.Color;
 
-import Engine.Component;
 import Engine.GameObject;
 
 // the functionality for movement exists in mover

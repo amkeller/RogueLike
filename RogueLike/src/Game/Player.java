@@ -2,13 +2,7 @@ package Game;
 
 import java.awt.Color;
 
-import java.awt.event.KeyEvent;
-
-import javax.swing.JLabel;
-
-import Engine.Component;
 import Engine.GameObject;
-import Engine.Main;
 import Engine.GridMap;
 
 public class Player extends GameObject {
@@ -27,6 +21,8 @@ public class Player extends GameObject {
 	
 	public Player() {
 		super(null);
+		this.setDirection(GridMap.NORTH);
+		myColor = Color.RED;
 		this.addComponent(new Input(this));
 		this.addComponent(new Motion(this));
 		this.addComponent(new Collision(this)); // player doesn't need use this

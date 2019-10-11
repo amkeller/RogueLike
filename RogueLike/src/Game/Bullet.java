@@ -3,7 +3,6 @@ package Game;
 import java.awt.Color;
 
 import Engine.GameObject;
-import Engine.Main;
 import Game.Collision;
 
 // the functionality for bullets are in Mover, except for the

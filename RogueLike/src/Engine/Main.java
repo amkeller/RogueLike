@@ -50,6 +50,10 @@ public class Main {
 	}
 	
 	public static void initialize() {
+		player.setX(0);
+		player.setY(gameMap.scaleH);
+		adversary.setX(gameMap.scaleW);
+		adversary.setY(0);
 	}
 	
 	private static void processInputs() {

@@ -52,9 +52,9 @@ public class Collision extends Component {
 	// collision event from the list of collisions to be handled if the other
 	// GameObject in the collision has already been handled & removed
 	public void manageCollisionsList() {
-		if (Engine.Main.collisions.contains(new cEvent(this.parent))) {
-			int i = Engine.Main.collisions.indexOf(new cEvent(this.parent));
-			cEvent c = Engine.Main.collisions.get(i);
+		if (Main.collisions.contains(new cEvent(this.parent))) {
+			int i = Main.collisions.indexOf(new cEvent(this.parent));
+			cEvent c = Main.collisions.get(i);
 			// other collision object hasn't already been handled & removed
 			if (this.parent == c.other) {
 				c.other = null; // remove parent, leave unhandled other
@@ -62,14 +62,14 @@ public class Collision extends Component {
 			}
 			 // both colliders have been handled, can delete the event
 			if ((this.parent == c.parent) && (c.other == null)) {
-				Engine.Main.collisions.remove(i);
+				Main.collisions.remove(i);
 				return;
 			}
 			// don't remove unhandled other from the collision event
 			if ((this.parent == c.parent) && (c.other != null)) {
 				// replace with event where other is parent & other field is null
-				Engine.Main.collisions.remove(i);
-				Engine.Main.collisions.add(new cEvent(c.other));
+				Main.collisions.remove(i);
+				Main.collisions.add(new cEvent(c.other));
 			}
 		}
 	}
@@ -77,18 +77,18 @@ public class Collision extends Component {
 	@Override
 	public void update() {
 		// check if a parent-related cEvent is in the list
-		if (Engine.Main.collisions.contains(new cEvent(this.parent))) {
+		if (Main.collisions.contains(new cEvent(this.parent))) {
 			// remove parent from collision event
 			manageCollisionsList();
 			// process parent's collision, currently only the adversary needs this
 			if (this.parent.getName() == "adversary") {
-				Engine.Main.gameObjs.remove(this.parent);
+				Main.gameObjs.remove(this.parent);
 				this.parent.setColor(Main.gameMap.freeColor);
-				Engine.Main.adversary = null;
+				Main.adversary = null;
 			}
 			// we're not actually generating bullet collision events right now
 			if (this.parent.getName() == "bullet") {
-				Engine.Main.gameObjs.remove(this.parent);
+				Main.gameObjs.remove(this.parent);
 				this.parent.setColor(Main.gameMap.freeColor);
 			}
 		}

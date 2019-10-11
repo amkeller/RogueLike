@@ -9,14 +9,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import java.io.*;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 
 import Game.Obstacle;
 
@@ -177,20 +174,6 @@ public class GridMap {
 			{0,	2,	2,	0,	1,	2,	2,	2,	2,	2},
 			{0,	2,	2,	0,	1,	2,	2,	2,	2,	2} };
 	
-	// test data for development
-	private int[][] testdata2 = {
-		    {0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-		    {0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-		    {0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-		    {0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-		    {0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-		    {0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-		    {0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-		    {0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-		    {0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-		    {0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-		    {0,	0,	0,	0,	0,	0,	0,	0,	0,	0}
-		    };
 	
 	// set testdata to testdata2 for white game map
 	private int[][] testdata = testdata1;

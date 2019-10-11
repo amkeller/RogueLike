@@ -38,7 +38,7 @@ public class Input extends Component {
 					b.setY(parent.getY());
 					b.setDirection(parent.getDirection());
 					Main.gameObjs.add(b);
-					Engine.Main.gameObjs.add(b);
+					Main.gameObjs.add(b);
 				}
 			}
 		}
