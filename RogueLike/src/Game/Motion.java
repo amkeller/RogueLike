@@ -71,7 +71,7 @@ public class Motion extends Component {
 				// the only collisions we're processing right now are bullet ones
 				if (parent.getName() == "bullet") {
 					
-				    if (other.getName() == "adversary") {
+				    if (other.getName() == "adversary") { 
 					   Main.collisions.add(Engine.Main.collisionThrower.new cEvent(other));
 				    }
 				    // remove bullet from the game if if hits anything

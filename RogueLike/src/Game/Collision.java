@@ -96,6 +96,6 @@ public class Collision extends Component {
 	
 	@Override
 	public void render() {
-		Main.gameMap.grid.setColor(parent.getX(), parent.getY(), this.parent.getColor());
+ 		Main.gameMap.grid.setColor(parent.getX(), parent.getY(), this.parent.getColor());
 	}
 }

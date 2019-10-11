@@ -12,13 +12,11 @@ public class Obstacle extends GameObject {
 	public Obstacle() {
 		super("obstacle"); // obstacles need no name
 		myColor = Color.GREEN;
-		this.addComponent(new Collision(this));
 	}
 	
 	public Obstacle(String name) {
 		super(name); // obstacles need no name
 		myColor = Color.GREEN;
-		this.addComponent(new Collision(this));
 	}
 	
 	// used by gridMap initializer to set them in gred
@@ -26,7 +24,6 @@ public class Obstacle extends GameObject {
 		super(name);
 		this.setX(x);
 		this.setY(y);
-		this.addComponent(new Collision(this));
 		
 	}
 	
