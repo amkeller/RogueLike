@@ -20,15 +20,19 @@ public class Input extends Component {
 			int keyCode = Main.keyPresses.remove(0);
 			if (keyCode == KeyEvent.VK_W) {
 				parent.setDirection(GridMap.NORTH); // up
+				((Player)parent).setShootDir(GridMap.NORTH);
 			}
 			else if (keyCode == KeyEvent.VK_A) {
 				parent.setDirection(GridMap.WEST); // down
+				((Player)parent).setShootDir(GridMap.WEST);
 			}
 			else if (keyCode == KeyEvent.VK_S) {
 				parent.setDirection(GridMap.SOUTH); // south
+				((Player)parent).setShootDir(GridMap.SOUTH);
 			}
 			else if (keyCode == KeyEvent.VK_D) {
 				parent.setDirection(GridMap.EAST); // east
+				((Player)parent).setShootDir(GridMap.EAST);
 			}
 			else if (keyCode == KeyEvent.VK_SPACE) {
 				// shoot a bullet
@@ -36,7 +40,7 @@ public class Input extends Component {
 					Bullet b = new Bullet("bullet");
 					b.setX(parent.getX());
 					b.setY(parent.getY());
-					b.setDirection(parent.getDirection());
+					b.setDirection(((Player)parent).getShootDir());
 					Main.gameObjs.add(b);
 					Main.gameObjs.add(b);
 				}

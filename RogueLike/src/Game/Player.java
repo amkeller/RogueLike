@@ -7,12 +7,11 @@ import Engine.GridMap;
 
 public class Player extends GameObject {
 	
-	boolean shoot = false;
+	int shootDirection = GridMap.NORTH;
 	
 	// constsructors
 	public Player(String name) {
 		super("player");
-		this.setDirection(GridMap.NORTH);
 		myColor = Color.RED;
 		this.addComponent(new Input(this));
 		this.addComponent(new Motion(this));
@@ -21,11 +20,17 @@ public class Player extends GameObject {
 	
 	public Player() {
 		super(null);
-		this.setDirection(GridMap.NORTH);
 		myColor = Color.RED;
 		this.addComponent(new Input(this));
 		this.addComponent(new Motion(this));
 		this.addComponent(new Collision(this)); // player doesn't need use this
 	};
+	
+	void setShootDir(int direction) {
+		this.shootDirection = direction;
+	}
+	int getShootDir() {
+		return this.shootDirection;
+	}
 	
 }

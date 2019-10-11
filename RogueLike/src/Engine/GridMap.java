@@ -157,6 +157,7 @@ public class GridMap {
 	public static final int EAST = 0;
 	public static final int SOUTH = 90;
 	public static final int WEST = 180;
+	public static final int STOP = 360;
 	public static final int COMPASS = 360;
 		
 	public Grid grid = new Grid(Main.GRIDSCALE); // public for now 

@@ -28,8 +28,9 @@ public class Motion extends Component {
 		case GridMap.WEST :
 			nextY -= 1;
 			break;
-		case -1 :
-			break;
+		case GridMap.STOP : 
+			// no move this round
+			return;
 		default :
 		}
 
@@ -47,6 +48,9 @@ public class Motion extends Component {
 			
 			// grid color change associated with a move
 			Main.gameMap.grid.setColor(lastx, lasty, Main.gameMap.freeColor); 
+			
+			// if player, take only one step, so reset direction to STOP here
+			if (parent.getName() == "player") parent.setDirection(GridMap.STOP);
 		}
 		else {			
 			// get other GameObject in the collision
@@ -66,7 +70,7 @@ public class Motion extends Component {
 				    // remove bullet from the game if if hits anything
 				    Main.gameObjs.remove(this.parent);
 				    this.parent.setColor(Main.gameMap.freeColor);
-				   
+				 
 				}
 			}		
 		}
