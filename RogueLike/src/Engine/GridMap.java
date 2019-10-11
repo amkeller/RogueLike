@@ -209,7 +209,7 @@ public class GridMap {
 			    		}
 			    		else {
 			    			// to increase number of  obstacles, decrease denominator
-			    			data[i][j] = (int)(Math.ceil(10*Math.random())/9);
+			    			data[i][j] = (int)(Math.ceil(10*Math.random())/10);
 			    		}
 			    		gameObjList.add(new Obstacle("o"+i+j, i, j));
 			    }

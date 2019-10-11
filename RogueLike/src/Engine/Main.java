@@ -1,5 +1,6 @@
 package Engine;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,8 +8,6 @@ import Game.Player;
 import Game.Adversary;
 import Game.Input;
 import Game.Motion;
-import Game.Collision;
-import Game.Collision.cEvent;	// collision event
 import Engine.GridMap;
 
 	//		Project 2
@@ -20,8 +19,8 @@ import Engine.GridMap;
 public class Main {
 	// Event lists
 	public static final ArrayList<GameObject> gameObjs = new ArrayList<GameObject>();
-	public static final ArrayList<cEvent> collisions = new ArrayList<cEvent>();
 	public static final ArrayList<Integer> keyPresses = new ArrayList<Integer>();
+	public static ArrayList<Integer> pendingKeyPresses = new ArrayList<Integer>();
 	public static final ArrayList<GameObject> addGameObjs = new ArrayList<GameObject>();
 	public static final ArrayList<GameObject> removeGameObjs = new ArrayList<GameObject>();
 	
@@ -36,7 +35,6 @@ public class Main {
 	
 	// Events
 	public static InputHandler inputHandler = new InputHandler(gameMap.grid);
-	public static Collision collisionThrower;
 	
 	public static enum games { ANT, SHOOTER };
 	
@@ -61,6 +59,7 @@ public class Main {
 		adversary.setY(gameMap.scaleW-1);
 	}
 	
+
 	private static void processInputs() {
 		// iterate thru gameObjs list & for every gameObj that contains an Input component,  
 		// execute update() & render()
@@ -92,19 +91,6 @@ public class Main {
 		//  execute update() & render()
 	}
 	
-	private static void processCollisions() {
-		// iterate thru gameObjs list & for every gameObj that contains a Collision component,  
-		// execute update() & render()
-		for (GameObject go : gameObjs) {
-			for (Component c : go.components) {
-				if (c.getClass() == Collision.class) {
-					c.update();
-					c.render();
-				}
-			}
-		}
-	}
-	
 	private static void processGameObjects() {
 		for (GameObject go : addGameObjs) {
 			for (Component c : go.components) {
@@ -117,6 +103,7 @@ public class Main {
 			}
 		}
 	}
+
 	
 	
 	private static void run() throws InterruptedException {
@@ -125,16 +112,36 @@ public class Main {
 		gameMap.grid.setFocusable(true);
 		
 		while (true) {
+			/*
 			processInputs();
 			processGameObjects();
 			processMotion();
 			processGameObjects();
 			processCollisions();
 			processGameObjects();
+			*/
+			
+			for (GameObject gO : gameObjs) {
+				if (gO.getName() != "obstacle") {
+				if (gO.getName() == "bullet")
+					System.out.println("Bullet " + gO.toString() + " in Main loop");
+				if (gO.getName() == "player" || gO.getName() == "adversary" || gO.getName() == "bullet")
+					System.out.println(gO.toString());
+				gO.update();
+				}
+			}
+			processGameObjects();
+			for (GameObject gO : gameObjs) {
+				if (gO.getName() == "bullet")
+					System.out.println("Bullet " + gO.toString() + " in Main loop");
+					
+				gO.render();
+			}
 			
 			// stuff for redrawing grid & etc needs to go here
+			gameMap.grid.repaint();
  			gameMap.grid.requestFocusInWindow();
-			Thread.sleep(5000);
+			Thread.sleep(50);
 		}
 		
 	}

@@ -15,7 +15,6 @@ public class Player extends GameObject {
 		myColor = Color.RED;
 		this.addComponent(new Input(this));
 		this.addComponent(new Motion(this));
-		this.addComponent(new Collision(this)); // player doesn't need use this
 	};
 	
 	public Player() {
@@ -23,7 +22,6 @@ public class Player extends GameObject {
 		myColor = Color.RED;
 		this.addComponent(new Input(this));
 		this.addComponent(new Motion(this));
-		this.addComponent(new Collision(this)); // player doesn't need use this
 	};
 	
 	void setShootDir(int direction) {

@@ -12,7 +12,7 @@ public abstract class GameObject {
 	private int posX = 0;
 	private int posY = 0; 
 	private int direction=GridMap.STOP;
-	public Color myColor = null; // objects start off invisible
+	public Color myColor = Main.gameMap.freeColor; // objects start off invisible
 	public ArrayList<Component> components = new ArrayList<Component>();
 	
 	public GameObject(String namein) {
@@ -78,5 +78,9 @@ public abstract class GameObject {
 			c.render();
 		}
 		
+	}
+	
+	public String toString() {
+		return "GameObject:" + this.getName() + " id: " + this.getId();
 	}
 }
