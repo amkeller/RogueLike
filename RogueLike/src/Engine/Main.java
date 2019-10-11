@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import Game.Player;
 import Game.Adversary;
+import Game.Input;
+import Game.Motion;
 import Game.Collision;
 import Game.Collision.cEvent;	// collision event
 import Engine.GridMap;

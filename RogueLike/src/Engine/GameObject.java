@@ -13,7 +13,7 @@ public abstract class GameObject {
 	private int posY = 0; 
 	private int direction=GridMap.STOP;
 	public Color myColor = null; // objects start off invisible
-	private ArrayList<Component> coms = new ArrayList<Component>();
+	public ArrayList<Component> components = new ArrayList<Component>();
 	
 	public GameObject(String namein) {
 		this.name = namein;
@@ -36,22 +36,22 @@ public abstract class GameObject {
 	public void setColor(Color cin)  { this.myColor = cin; }
  	
 	public void addComponent(Component component) {
-		if (!coms.contains(component)) {
-			coms.add(component);
+		if (!components.contains(component)) {
+			components.add(component);
 		}
 	}
 	
 	public boolean removeComponent(Class c) {
-		for (Component co : coms) {
+		for (Component co : components) {
 			if (c == co.getClass()) {
-				coms.remove(co);
+				components.remove(co);
 			}
 		}
 		return true;
 	}
 	
 	public Component getComponent(Class c) {
-		for (Component co : coms) {
+		for (Component co : components) {
 			if (c == co.getClass()) {
 				return co;
 			}
