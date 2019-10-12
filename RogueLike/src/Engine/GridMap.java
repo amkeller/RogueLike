@@ -202,13 +202,13 @@ public class GridMap {
 	public void init(String filePath, ArrayList<GameObject> gameObjList) {
 		int[][] data = new int[scaleH][scaleW];
 		if (filePath.equals("random")) {
-			for (int i = 1; i < scaleH-1; i++) {
-			    for (int j = 1; j < scaleW-1; j++) {
+			for (int i = 0; i < scaleH; i++) {
+			    for (int j = 0; j < scaleW; j++) {
 			    		if (i == 0 && j == 0) {
 			    			data[i][j] = 0;
 			    		}
 			    		else {
-			    			// to increase number of  obstacles, decrease denominator
+//			    			to increase number of  obstacles, decrease denominator
 			    			data[i][j] = (int)(Math.ceil(10*Math.random())/9);
 			    		}
 			    		gameObjList.add(new Obstacle("o"+i+j, i, j));

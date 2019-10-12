@@ -12,13 +12,13 @@ public class Adversary extends GameObject {
 		super(name);
 		myColor = Color.DARK_GRAY;
 		this.addComponent(new Motion(this));
-		//this.addComponent(new Pathfinder(this));
+		this.addComponent(new Pathfinder(this));
 	}
 	public Adversary() {
 		super("adversary");
 		myColor = Color.DARK_GRAY;
 		this.addComponent(new Motion(this));
-		//this.addComponent(new Pathfinder(this));
+		this.addComponent(new Pathfinder(this));
 	}
 
 }

@@ -8,6 +8,7 @@ import Game.Player;
 import Game.Adversary;
 import Game.Input;
 import Game.Motion;
+import Game.Pathfinder;
 import Engine.GridMap;
 
 	//		Project 2
@@ -26,12 +27,12 @@ public class Main {
 	
 	public static final int GRIDSCALE = 20;
 	
-	//static GridMap antMap = new GridMap(GRIDSCALE);
 	public static GridMap gameMap = new GridMap(GRIDSCALE);
 	
 	// GameObjects
 	public static Player player = new Player("player");
 	public static Adversary adversary = new Adversary("adversary");
+	public static boolean Hpressed = false;
 	
 	// Events
 	public static InputHandler inputHandler = new InputHandler(gameMap.grid);
@@ -45,6 +46,15 @@ public class Main {
 		gameMap.init("random", gameObjs);
 		gameObjs.add(player);
 		gameObjs.add(adversary);
+		
+		
+		// Add Component here----------------------------------------------------------
+		
+		
+		
+		
+		// ----------------------------------------------------------------------------
+		
 		
 		run();
 		
@@ -87,8 +97,16 @@ public class Main {
 	}
 	
 	private static void processPath() {
-		// iterate thru gameObjs list & for every gameObj that contains a  Pathfiinder component,  
+		// iterate thru gameObjs list & for every gameObj that contains a Pathfinder component,  
 		//  execute update() & render()
+		for (GameObject go : gameObjs) {
+			for (Component c : go.components) {
+				if (c.getClass() == Pathfinder.class) {
+					c.update();
+					c.render();
+				}
+			}
+		}
 	}
 	
 	private static void processGameObjects() {
@@ -122,22 +140,42 @@ public class Main {
 			*/
 			
 			for (GameObject gO : gameObjs) {
-				if (gO.getName() != "obstacle") {
+				if (gO.getName() == "adversary") {
+					if (Hpressed ==  false) {
+						gO.update();
+					}
+				} 
+				
+				else if (gO.getName() != "obstacle") {
 					gO.update();
 				}
 			}
 			processGameObjects();
-			for (GameObject gO : gameObjs) {					
-				gO.render();
+			for (GameObject gO : gameObjs) {		
+//				if (gO.getName() == "adversary") {
+//					if (Hpressed == false) {
+//						gO.update();
+//					}
+//				}
+//					
+//				else {
+					gO.render();
+//				}
 			}
 			
 			// stuff for redrawing grid & etc needs to go here
 			gameMap.grid.repaint();
  			gameMap.grid.requestFocusInWindow();
-			Thread.sleep(20);
+			Thread.sleep(100);
 		}
 		
 	}
 	
 
 }
+
+
+	
+	
+	
+	

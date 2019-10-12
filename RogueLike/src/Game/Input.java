@@ -43,6 +43,9 @@ public class Input extends Component {
 					b.setDirection(((Player)parent).getShootDir());
 					Main.addGameObjs.add(b);
 				}
+			} 
+			else if (keyCode == KeyEvent.VK_H) {
+				Main.Hpressed = !(Main.Hpressed);
 			}
 		}
 		else {

@@ -51,4 +51,3 @@ public class InputHandler implements KeyListener {
 		Main.keyPresses.remove(new Integer(keyCode));
 	}
 }
-

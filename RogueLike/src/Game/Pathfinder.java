@@ -1,137 +1,243 @@
 package Game;
 
 
-//import java.util.*;
 import java.util.PriorityQueue;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Random;
 
-/**
-  The AStarSearch class, along with the AStarNode class,
-  implements a generic A* search algorithm. The AStarNode
-  class should be subclassed to provide searching capability.
-  ref: 
-  http://www.peachpit.com/articles/article.aspx?p=101142&seqNum=2
-*/
-public class Pathfinder<T> {
+import Engine.Component;
+import Engine.GameObject;
+import Engine.Main;
+import Game.Pathfinder.AStar.Cell;
 
+import java.awt.Color;
+import java.util.ArrayList;
 
-	/* inner node class
-	 * 
-	 */
-	public abstract class Node implements Comparable {
+public class Pathfinder extends Component {
 
-		  Node predecessor;
-		  float costFromStart;
-		  float estimatedCostToGoal;
+	public static ArrayList<Cell> path = new ArrayList<Cell>();
+	public static final int MARGINS = Main.gameMap.grid.MARGIN_SIZE;
+	public static final int HEIGHT = Main.GRIDSCALE;
+	public static final int WIDTH = Main.GRIDSCALE*2;
 
-
-		  public float getCost() {
-		    return costFromStart + estimatedCostToGoal;
-		  }
+	public Pathfinder(GameObject parent) {
+		super(parent);
+	}
 
 
-		  public int compareTo(Object other) {
-		    float thisValue = this.getCost();
-		    float otherValue = ((Node)other).getCost();
+	public class AStar {
+		public static final int DIAGONAL_COST = 11;
+		public static final int V_H_COST = 10;
 
-		    float v = thisValue - otherValue;
-		    return (v>0)?1:(v<0)?-1:0; // sign function
-		  }
+		Cell [][] grid = new Cell[HEIGHT][WIDTH];
 
+		PriorityQueue<Cell> open = new PriorityQueue<Cell>((Object o1, Object o2) -> {
+			Cell c1 = (Cell)o1;
+			Cell c2 = (Cell)o2;
 
-		  /**
-		    Gets the cost between this node and the specified
-		    adjacent (AKA "neighbor" or "child") node.
-		  */
-		  public abstract float getCost(Node node);
+			return c1.finalCost<c2.finalCost?-1:
+				c1.finalCost>c2.finalCost?1:0;
+		});
 
+		boolean closed[][] = new boolean[HEIGHT][WIDTH];
 
-		  /**
-		    Gets the estimated cost between this node and the
-		    specified node. The estimated cost should never exceed
-		    the true cost. The better the estimate, the more
-		    effecient the search.
-		  */
-		  public abstract float getEstimatedCost(Node node);
+		int startRow, startCol;
+		int endRow, endCol;
 
+		class Cell{  
+			int heuristicCost = 0; //Heuristic cost
+			int finalCost = 0; //G+H
+			int r, c;
+			Cell parent;
 
-		  /**
-		    Gets the children (AKA "neighbors" or "adjacent nodes")
-		    of this node.
-		  */
-		  public abstract List getNeighbors();
-		}  
+			Cell(int i, int j){
+				this.r = i;
+				this.c = j;
+			}
 
-  /**
-    Construct the path, not including the start node.
-  */
-  protected List constructPath(Node node) {
-    LinkedList path = new LinkedList();
-    while (node.predecessor != null) {
-      path.addFirst(node);
-      node = node.predecessor;
-    }
-    return path;
-  }
+			@Override
+			public String toString(){
+				return "["+this.r+", "+this.c+"]";
+			}
+		}
 
 
-  /**
-    Find the path from the start node to the end node. A list
-    of AStarNodes is returned, or null if the path is not
-    found. 
-  */
-  public List<T> findPath(Node startNode, Node goalNode) {
 
-    PriorityQueue<Node> openList = new PriorityQueue<Node>();
-    LinkedList closedList = new LinkedList();
+		public void setBlocked(int i, int j){
+			grid[i][j] = null;
+		}
 
-    startNode.costFromStart = 0;
-    startNode.estimatedCostToGoal =
-      startNode.getEstimatedCost(goalNode);
-    startNode.predecessor = null;
-    openList.add(startNode);
+		public void setStartCell(int i, int j){
+			startRow = i;
+			startCol = j;
+			parent = null;
+		}
 
-    while (!openList.isEmpty()) {
-      Node node = (Node)openList.poll();
-      if (node == goalNode) {
-        // construct the path from start to goal
-        return constructPath(goalNode);
-      }
+		public void setEndCell(int i, int j){
+			endRow = i;
+			endCol = j;
+		}
 
-      List neighbors = node.getNeighbors();
-      for (int i=0; i<neighbors.size(); i++) {
-        Node neighborNode =
-          (Node)neighbors.get(i);
-        boolean isOpen = openList.contains(neighborNode);
-        boolean isClosed =
-          closedList.contains(neighborNode);
-        float costFromStart = node.costFromStart +
-          node.getCost(neighborNode);
+		void checkAndUpdateCost(Cell current, Cell t, int cost){
+			if(t == null || closed[t.r][t.c])return;
+			int t_final_cost = t.heuristicCost+cost;
 
-        // check if the neighbor node has not been
-        // traversed or if a shorter path to this
-        // neighbor node is found.
-        if ((!isOpen && !isClosed) ||
-          costFromStart < neighborNode.costFromStart)
-        {
-          neighborNode.predecessor = node;
-          neighborNode.costFromStart = costFromStart;
-          neighborNode.estimatedCostToGoal =
-            neighborNode.getEstimatedCost(goalNode);
-          if (isClosed) {
-            closedList.remove(neighborNode);
-          }
-          if (!isOpen) {
-            openList.add(neighborNode);
-          }
-        }
-      }
-      closedList.add(node);
-    }
+			boolean inOpen = open.contains(t);
+			if(!inOpen || t_final_cost<t.finalCost){
+				t.finalCost = t_final_cost;
+				t.parent = current;
+				if(!inOpen)open.add(t);
+			}
+		}
 
-    // no path found
-    return null;
-  }
+		public AStar(int startX, int startY, int endX, int endY){
+
+			startRow = startX;
+			startCol = startY;
+
+			endRow = endX;
+			endCol = endY;
+
+			// add the start location to open list.
+			open.add(new Cell(startX, startY));
+
+			// adds heuristicCost to each cell in the grid
+			for(int i = 0; i < HEIGHT; ++i){
+				for(int j = 0; j < WIDTH; ++j){
+					grid[i][j] = new Cell(i, j);
+					grid[i][j].heuristicCost = Math.abs(i-endRow)+Math.abs(j-endCol);
+					//                  System.out.print(grid[i][j].heuristicCost+" ");
+				}
+				//              System.out.println();
+			}
+
+			// add obstacles to the astar
+			for (int row = 0; row < HEIGHT; row++) {
+				for (int col = 0; col < WIDTH; col++) {
+					if (Main.gameMap.grid.getColor(row, col).equals(Color.green)) {
+						setBlocked(row, col);
+					}
+				}
+			}
+		}
+
+
+
+		public ArrayList<Cell> findPath() {
+			Cell current;
+			//path = new ArrayList<Cell>();
+
+			while(true) {
+
+				current = open.poll();
+				if(current == null) {
+					break;
+				}
+				closed[current.r][current.c] = true;
+
+				Cell t;  
+				if(current.r-1>=0){
+					t = grid[current.r-1][current.c];
+					checkAndUpdateCost(current, t, current.finalCost+V_H_COST);
+
+					if(current.c-1>=0){                      
+						t = grid[current.r-1][current.c-1];
+						checkAndUpdateCost(current, t, current.finalCost+DIAGONAL_COST);
+					}
+
+					if(current.c+1<grid[0].length){
+						t = grid[current.r-1][current.c+1];
+						checkAndUpdateCost(current, t, current.finalCost+DIAGONAL_COST);
+					}
+				}
+
+				if(current.c-1>=0){
+					t = grid[current.r][current.c-1];
+					checkAndUpdateCost(current, t, current.finalCost+V_H_COST);
+				}
+
+				if(current.c+1<grid[0].length){
+					t = grid[current.r][current.c+1];
+					checkAndUpdateCost(current, t, current.finalCost+V_H_COST);
+				}
+
+				if(current.r+1<grid.length){
+					t = grid[current.r+1][current.c];
+					checkAndUpdateCost(current, t, current.finalCost+V_H_COST);
+
+					if(current.c-1>=0){
+						t = grid[current.r+1][current.c-1];
+						checkAndUpdateCost(current, t, current.finalCost+DIAGONAL_COST);
+					}
+
+					if(current.c+1<grid[0].length){
+						t = grid[current.r+1][current.c+1];
+						checkAndUpdateCost(current, t, current.finalCost+DIAGONAL_COST);
+					}  
+				}
+			}
+
+
+			// return the correct path in the right order
+			if (closed[endRow][endCol]) {
+				Cell curr = grid[endRow][endCol];
+				while (curr.r != startRow && curr.c != startCol) {
+					path.add(0, curr);
+					curr = curr.parent;
+				}
+				return path;
+			}
+			else {
+				return null;
+			}
+		}
+
+
+	}
+
+	public void update() {
+
+		// if it is at start / needs a path, activate A*
+		if (path.size() == 0) {
+			Random rand = new Random();
+			int endX, endY;
+
+			// keep finding a potential end destination if it is not free
+			do {
+				endX = rand.nextInt(Main.gameMap.grid.getHt());
+				endY = rand.nextInt(Main.gameMap.grid.getWd());
+			} while (Main.gameMap.grid.getColor(endX, endY).equals(Color.green));
+
+//			System.out.println(endX + " , " + endY);
+
+			AStar a = new AStar(parent.getX(), parent.getY(), endX, endY);
+
+			path = a.findPath();
+
+			if(path.size() == 0) {
+				return;
+			}
+
+			Cell nextStep = path.remove(0);
+			Main.gameMap.grid.setColor(parent.getX(), parent.getY(), Main.gameMap.freeColor);
+
+			// move adversary to next step of the path
+			parent.setX(nextStep.r);
+			parent.setY(nextStep.c);
+		}
+
+		// if path is already in existence
+		else {
+			Cell nextStep = path.remove(0);
+			//Color prev = Main.gameMap.grid.color;
+			Main.gameMap.grid.setColor(parent.getX(), parent.getY(), Main.gameMap.freeColor);
+
+			parent.setX(nextStep.r);
+			parent.setY(nextStep.c);
+		}
+	}
+
+	public void render() {
+		// rendering will be handled via motion
+	}
 
 }
