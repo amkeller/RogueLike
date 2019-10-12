@@ -14,9 +14,6 @@ public class Motion extends Component {
 	// updates the position of a moving object
 	@Override
 	public void update() {
-		if (parent.getName() == "bullet")
-  		System.out.println("In Motion::" + parent.getName() + ": " + "x: " + parent.getX() + ", y: "  + parent.getY() 
-		+ ", " +  parent.toString());
 		int nextX = parent.getX(), nextY = parent.getY();
 		switch (parent.getDirection()) {
 		case GridMap.NORTH :

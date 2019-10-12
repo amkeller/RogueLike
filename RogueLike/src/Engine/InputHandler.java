@@ -37,7 +37,6 @@ public class InputHandler implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println("keystroke: " + e.getKeyCode());
 		int keyCode = e.getKeyCode();
 		// add the keypress to the keypress event list in main
 		if (!Main.keyPresses.contains(keyCode) ) {

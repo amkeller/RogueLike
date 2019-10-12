@@ -123,25 +123,18 @@ public class Main {
 			
 			for (GameObject gO : gameObjs) {
 				if (gO.getName() != "obstacle") {
-				if (gO.getName() == "bullet")
-					System.out.println("Bullet " + gO.toString() + " in Main loop");
-				if (gO.getName() == "player" || gO.getName() == "adversary" || gO.getName() == "bullet")
-					System.out.println(gO.toString());
-				gO.update();
+					gO.update();
 				}
 			}
 			processGameObjects();
-			for (GameObject gO : gameObjs) {
-				if (gO.getName() == "bullet")
-					System.out.println("Bullet " + gO.toString() + " in Main loop");
-					
+			for (GameObject gO : gameObjs) {					
 				gO.render();
 			}
 			
 			// stuff for redrawing grid & etc needs to go here
 			gameMap.grid.repaint();
  			gameMap.grid.requestFocusInWindow();
-			Thread.sleep(50);
+			Thread.sleep(20);
 		}
 		
 	}
